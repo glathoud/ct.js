@@ -1,7 +1,6 @@
-    
-function _wr(name) { return `console.log("${name}",${name})`;}
-
 // --- Statement examples  `ct...ct;`
+
+function _wr(name) { return `console.log("${name}",${name})`;}
 
 (function () {
 
