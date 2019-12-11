@@ -1,6 +1,7 @@
 <!doctype html>
 <script type="text/javascript" src="ct.js"></script>
 <script type="text/javascript">
+    
 function _wr(name) { return `console.log("${name}",${name})`;}
 
 // --- Statement examples  `ct...ct;`
@@ -42,7 +43,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
     var h = ct( function ( a, b, c, d )
     {
         // Local CT definition.  These 3 lines will be removed
-        // by the call `ct( h0 )`.
+        // by the `ct()` call.
         ct.def( function expr( sx, sy, sz ) {
             return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
         }).ct;
@@ -64,7 +65,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
        (function h0( a, b, c, d )
        {
            // Local CT definition.  These 3 lines will be removed
-           // by the call `ct( h0 )`.
+           // by the `ct()` call.
            ;
        
            return [
