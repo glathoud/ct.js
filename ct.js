@@ -1,7 +1,20 @@
-/* Example of use
-function _wr(name) { return `console.log("${name}",${name})`;}
+/*
+  ct.js: Compile Time function execution in JavaScript
 
-var f = ct( function (x) { ct.mixin(_wr("x"));; } );
+  Inspired from the CTFE of the D language.
+  
+  By G. Lathoud, December 2019 and later. Contact: glat@glat.info
+  The Boost license apply, as described in the file ./LICENSE
+*/
+
+
+/* Example of use
+
+    function _wr(name) { return `console.log("${name}",${name})`;}
+ 
+    var f = ct( function (x) { ct.mixin(_wr("x"));; } );
+
+  For more examples see the file ./index.html
 */
 
 function ct( /*function | string*/f_or_code )
@@ -26,7 +39,6 @@ function ct( /*function | string*/f_or_code )
         return ct[ g1 ].call( that, g2 );
     }
 }
-
 
 ct.mixin = function ( g2 )
 {
