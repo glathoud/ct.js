@@ -33,8 +33,8 @@ function ct( /*function | string*/f_or_code )
     ret.toString = function () { return eval_compatible_code; };
     
     return ret;
-    
-    function replace_one( all, g1, g2 )
+
+    function replace_one( _, g1, g2 )
     {
         if (cache[ g1 ])
             return ct._eval.call( cache[ g1 ], 'this('+g2+')' );
@@ -44,7 +44,10 @@ function ct( /*function | string*/f_or_code )
         
         null.unknown;
     }
+
 }
+
+// internals
 
 ct._eval   = function ( code ) {
     return new Function("return ("+code+")").call( this );
@@ -64,12 +67,24 @@ ct.def   = function ( g2 )
     return '';  // Code removed
 };
 
-ct.map = function ( g2 )
+ct.map = function ( /*(...)(...)*/g2 )
 {
+    var cache = this;
+    
+    var mo = g2.match( /^\s*([^\)]+)\s*\)([\s\S]*)$/ )
+    , name = mo[ 1 ]
+    , rest = mo[ 2 ]
+    ;
+    name  ||  null.missing_name;
+    rest  ||  null.missing_rest;
 
+    var f = cache[ name ]  ||  ct[ name ]
+    , arr = ct._eval( rest+')' )
+    ;
+    return '['+arr.map( v => f.apply( cache, v ) )+']';
 }
 
 ct.mix = function ( g2 )
 {
-    return (new Function ("return ("+g2+");")());
+    return ct._eval( g2 );
 }; 
