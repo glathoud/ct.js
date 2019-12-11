@@ -73,7 +73,7 @@ ct.def   = function ( /*function | name, function*/g2 )
         name = mo[ 1 ];
         x    = ct._eval( mo[ 2 ] );
     }
-    name  ||  null.bug;
+    name  ||  null.missing_name;
     x.call.a;
     
     var cache = this;
