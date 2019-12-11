@@ -25,9 +25,7 @@ The Boost license apply, as described in the file <script type="text/javascript"
 
     <pre><code class="prettyprint lang-js">ct( () => {
 
-    ct.def(function one( name ) {
-          return `write_source_code(${name}_source_code,"${name}.js")`
-    }).ct;
+    ct.def( one, ( name ) => `write_source_code(${name}_source_code,"${name}.js")` ).ct;
     
     ct.one("expl").ct;
     ct.one("ct").ct;
@@ -48,10 +46,8 @@ The Boost license apply, as described in the file <script type="text/javascript"
     <script type="text/javascript">
 ct( () => {
 
-    ct.def(function one( name ) {
-          return `write_source_code(${name}_source_code,"${name}.js")`
-    }).ct;
-    
+    ct.def( one, ( name ) => `write_source_code(${name}_source_code,"${name}.js")` ).ct;
+
     ct.one("expl").ct;
     ct.one("ct").ct;
 
