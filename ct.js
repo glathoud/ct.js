@@ -12,7 +12,7 @@
 
     function _wr(name) { return `console.log("${name}",${name})`;}
  
-    var f = ct( function (x) { ct.mixin(_wr("x"));; } );
+    var f = ct( function (x) { ct.mix(_wr("x"));; } );
 
   For more examples see the file ./index.html
 */
@@ -64,8 +64,12 @@ ct.def   = function ( g2 )
     return '';  // Code removed
 };
 
+ct.map = function ( g2 )
+{
 
-ct.mixin = function ( g2 )
+}
+
+ct.mix = function ( g2 )
 {
     return (new Function ("return ("+g2+");")());
 }; 

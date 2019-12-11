@@ -10,7 +10,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
     // Pure function: no closure needed
     
-    var f = ct( function (x) { ct.mixin(_wr("x")).ct; } );
+    var f = ct( function (x) { ct.mix(_wr("x")).ct; } );
 
     console.log(f);
     
@@ -26,7 +26,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
     // Closure needed: use `eval(''+ct(...))`
     
     var x = 1.234;
-    var g = eval( ''+ct( function () { ct.mixin(_wr("x++")).ct; } ) );
+    var g = eval( ''+ct( function () { ct.mix(_wr("x++")).ct; } ) );
 
     console.log(g);
     
@@ -83,5 +83,55 @@ function _wr(name) { return `console.log("${name}",${name})`;}
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
 })();
+
+
+(function () {
+
+    // Variant with ct.map
+    
+    var h = ct( function ( a, b, c, d )
+    {
+        // Local CT definition.  These 3 lines will be removed
+        // by the `ct()` call.
+        ct.def( function expr( sx, sy, sz ) {
+            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
+        }).ct;
+
+        return ct.map( expr )([
+            [ 'a', 'b', 'c' ]
+            , [ 'a', 'c', 'b' ]
+            , [ 'b', 'a', 'c' ]
+            , [ 'b', 'c', 'a' ]
+            , [ 'c', 'a', 'b' ]
+            , [ 'c', 'b', 'a' ]
+        ]).ct;
+    } );
+
+    console.log( ''+h );
+
+    /* js console output:
+    
+       (function h0( a, b, c, d )
+       {
+           // Local CT definition.  These 3 lines will be removed
+           // by the `ct()` call.
+           ;
+       
+           return [
+               (a+b)/(b-c)*c*c
+               , (a+c)/(c-b)*b*b
+               , (b+a)/(a-c)*c*c
+               , (b+c)/(c-a)*a*a
+               , (c+a)/(a-b)*b*b
+               , (c+b)/(b-a)*a*a
+           ];
+       })
+    */
+    
+    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
+    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
+
+})();
+
 
 </script>
