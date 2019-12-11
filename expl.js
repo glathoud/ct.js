@@ -42,7 +42,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
         // by the `ct()` call.
         ct.def( function expr( sx, sy, sz ) {
             return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
-        }).ct;
+        }).ct
 
         return [
             ct.expr( 'a', 'b', 'c' ).ct
@@ -62,7 +62,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
        {
            // Local CT definition.  These 3 lines will be removed
            // by the `ct()` call.
-           ;
+           
        
            return [
                (a+b)/(b-c)*c*c
@@ -91,7 +91,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
         // by the `ct()` call.
         ct.def( function expr( sx, sy, sz ) {
             return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
-        }).ct;
+        }).ct
 
         return ct.map(expr)([
             [ 'a', 'b', 'c' ]
@@ -111,7 +111,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
        {
            // Local CT definition.  These 3 lines will be removed
            // by the `ct()` call.
-           ;
+           
       
            return [(a+b)/(b-c)*c*c,(a+c)/(c-b)*b*b,(b+a)/(a-c)*c*c,(b+c)/(c-a)*a*a,(c+a)/(a-b)*b*b,(c+b)/(b-a)*a*a];
        })
