@@ -82,15 +82,13 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
 (function () {
 
-    // Variant with ct.map
+    // Variant with ct.map, and a short definition of `expr`
     
     const h = ct( ( a, b, c, d ) =>
     {
-        // Local CT definition.  These 3 lines will be removed
+        // Local CT definition.  The next line will be removed
         // by the `ct()` call.
-        ct.def( function expr( /*string*/x, /*string*/y, /*string*/z ) {
-            return `(${x}+${y})/(${y}-${z})*${z}*${z}`;
-        }).ct
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
 
         return ct.map(expr)([
             [ 'a', 'b', 'c' ]
@@ -108,7 +106,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
     
        (( a, b, c, d ) =>
        {
-           // Local CT definition.  These 3 lines will be removed
+           // Local CT definition.  The next line will be removed
            // by the `ct()` call.
            
       
@@ -134,16 +132,15 @@ const CONSTANT = [
 
 (function () {
 
-    // Variant with ct.map and a global constant
+    // Variant with ct.map, and a short definition of `expr` and a
+    // global constant
     
     const h = ct( ( a, b, c, d ) =>
     {
-        // Local CT definition.  These 3 lines will be removed
+        // Local CT definition.  The next line will be removed
         // by the `ct()` call.
-        ct.def( function expr( /*string*/x, /*string*/y, /*string*/z ) {
-            return `(${x}+${y})/(${y}-${z})*${z}*${z}`;
-        }).ct
-
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+        
         return ct.map(expr)( CONSTANT ).ct;
     } );
 
@@ -153,7 +150,7 @@ const CONSTANT = [
     
        (( a, b, c, d ) =>
        {
-           // Local CT definition.  These 3 lines will be removed
+           // Local CT definition.  The next line will be removed
            // by the `ct()` call.
            
       

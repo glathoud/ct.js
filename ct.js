@@ -56,14 +56,28 @@ ct._eval   = function ( code ) {
 
 // ct.* tools
 
-ct.def   = function ( g2 )
+ct.def   = function ( /*function name (... ) { ... } | name, (...) => {...}*/g2 )
 {
-    var x = ct._eval( g2 );
-    'function' === typeof x  ||  null.must_be_a_function;
-    x.name  ||  null.missing_name;
-
+    var x, name;
+    try
+    {
+        // ct.def( function name (...) {...} )
+        x = ct._eval( g2 );
+        'function' === typeof x  ||  null.must_be_a_function;
+        name = x.name;
+    }
+    catch (e)
+    {
+        // ct.def( name, (...) => {...} )
+        var mo = g2.match( /^\s*(\w+)\s*,([\s\S]+)$/ );
+        name = mo[ 1 ];
+        x    = ct._eval( mo[ 2 ] );
+    }
+    name  ||  null.bug;
+    x.call.a;
+    
     var cache = this;
-    cache[ x.name ] = x;
+    cache[ name ] = x;
 
     return '';  // Code removed
 };
