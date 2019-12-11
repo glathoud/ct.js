@@ -1,7 +1,8 @@
 /*
   ct.js: Compile Time Function Execution (CTFE) in JavaScript
 
-  Inspired from the CTFE of the D language.
+  Inspired from the CTFE of the D language, ct.js permits to
+  generate efficient code while maintaining expressiveness.
   
   By G. Lathoud, December 2019 and later. Contact: glat@glat.info
   The Boost license apply, as described in the file ./LICENSE
