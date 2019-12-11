@@ -13,9 +13,9 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
     console.log(f);
     
-    f(123);
-    f(456);
-    f(789);
+    f(123); // js console output: x 123 
+    f(456); // js console output: x 456
+    f(789); // js console output: x 789
 
     
 })();
@@ -29,9 +29,9 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
     console.log(g);
     
-    g();
-    g();
-    g();
+    g(); // js console output: x++ 1.234
+    g(); // js console output: x++ 2.234
+    g(); // js console output: x++ 3.234
     
 })();
 

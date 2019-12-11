@@ -40,7 +40,7 @@ function ct( /*function | string*/f_or_code )
             return ct[ g1 ].call( cache, g2 );
 
         if (cache[ g1 ])
-            return eval( 'cache[ g1 ]('+g2+')' );
+            return ct._eval.call( cache[ g1 ], 'this('+g2+')' );
         
         null.unknown;
     }
