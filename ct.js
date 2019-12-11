@@ -82,7 +82,7 @@ ct.map = function ( /*(...)(...)*/g2 )
     var f = cache[ name ]  ||  ct[ name ]
     , arr = ct._eval( rest+')' )
     ;
-    return '['+arr.map( v => f.apply( cache, v ) )+']';
+    return '['+arr.map( v => f.apply( cache, v ) ).join( ', ' )+']';
 }
 
 ct.mix = function ( g2 )

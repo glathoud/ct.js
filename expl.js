@@ -112,7 +112,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
            // by the `ct()` call.
            
       
-           return [(a+b)/(b-c)*c*c,(a+c)/(c-b)*b*b,(b+a)/(a-c)*c*c,(b+c)/(c-a)*a*a,(c+a)/(a-b)*b*b,(c+b)/(b-a)*a*a];
+           return [(a+b)/(b-c)*c*c, (a+c)/(c-b)*b*b, (b+a)/(a-c)*c*c, (b+c)/(c-a)*a*a, (c+a)/(a-b)*b*b, (c+b)/(b-a)*a*a];
        })
     */
     
@@ -157,7 +157,7 @@ const CONSTANT = [
            // by the `ct()` call.
            
       
-           return [(a+b)/(b-c)*c*c,(a+c)/(c-b)*b*b,(b+a)/(a-c)*c*c,(b+c)/(c-a)*a*a,(c+a)/(a-b)*b*b,(c+b)/(b-a)*a*a];
+           return [(a+b)/(b-c)*c*c, (a+c)/(c-b)*b*b, (b+a)/(a-c)*c*c, (b+c)/(c-a)*a*a, (c+a)/(a-b)*b*b, (c+b)/(b-a)*a*a];
        })
     */
     
