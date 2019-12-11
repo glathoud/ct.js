@@ -2,11 +2,77 @@
 <html>
   <head>
     <meta charset=utf-8/>
+    <style type="text/css">
+      body {
+      padding: 0 1em 0 1em;
+      font-family: helvetica; 
+      font-family: Verdana,Arial,'Lucida Grande',Sans-Serif;
+      }
+      .title { margin-bottom: 1em; }
+      .right { float: right; }
+      .clear { clear: both; }
+      .text-center { text-align: center; }
+
+      .intro { margin: auto; text-align: justify;
+      margin-top: 1.5em;
+      font-size: 1.5em;
+      }
+      .intro code { line-height: normal; }
+
+      .top-img { text-align: center; }
+
+      .section_anchor { display: none; margin-left: 0.5em; }
+      h3:hover .section_anchor { display: initial; }
+
+      .hidden { display: none; }
+      .small_img { max-width: 6em; margin: 0.5em; }
+      .code_cont { 
+      float: left;
+      position: relative;
+      width: calc( 100% - 2em );
+      padding: 1em;
+      }
+
+      @media screen and (max-width: 999px) {
+      .right, pre, button, .code_cont_header { font-size: 1.8em; }
+      .code_cont {font-size: 1.5em; }
+      pre  button { font-size: 1.2em; }
+      #speedtest_output { font-size: 0.85em; }
+      h3 { margin-top: 3em; }
+      }
+      
+      @media screen and (min-width: 1200px) {
+      .intro { max-width: 600px;
+      line-height: 1.2em;
+      }
+      .code_cont {
+      width: calc( 50% - 2em );
+      }
+      }
+      
+      .code_cont_header {
+      margin-top: 2em;
+      background-color: lightgrey;
+      border: solid 1px black;
+      padding: 1em;
+      }
+      .code_o { width: 100%; margin: 0; max-height: 100%; }
+      .code_o.fext_unittest_js { height: 65em; }
+      .code_o.fext_js { height: 435em; }
+
+      .success { color: darkgreen; }
+      .failure { color: darkred; font-weight: bold;}
+
+      .speedtest_patience { display: none; }
+      .speedtest_running .speedtest_patience { display: inherit; }
+      .speedtest_running button { display: none; }
+    </style>
     <script type="text/javascript" src="ct.js"></script>
     <script type="text/javascript" src="expl.js"></script>
   </head>
   <body>
     <script type="text/javascript">function href( s ) { document.write( '\x3Ca href="'+s+'"\x3E'+s+'\x3C/a\x3E' ); }</script>
+    <div class="intro">
     <pre><code><a href="https://github.com/glathoud/ct.js">ct.js</a>: Compile Time Function Execution (CTFE) in JavaScript
 
 Inspired from the CTFE of the D language, ct.js permits to
@@ -17,6 +83,7 @@ The Boost license apply, as described in the file <script type="text/javascript"
 </code></pre>    
 
     <hr/>
+
     <p>Open your Developer Tools &amp; JS console to see the examples in action.
 
     <h3>Sources</h3>
@@ -24,15 +91,17 @@ The Boost license apply, as described in the file <script type="text/javascript"
     <p>The sources for <code>expl.js</code> and <code>ct.js</code> are displayed below. For fun, I used <code>ct.js</code> to dump and prettify the two source files:</p>
 
     <pre><code class="prettyprint lang-js">ct( () => {
-
-    ct.def( one, (name) => `write_source_code(${name}_source_code,"${name}.js")` ).ct;
+  ct.def( one, (name) =>
+    `write_source_code(${name}_source_code,"${name}.js")` ).ct;
     
-    ct.one("expl").ct;
-    ct.one("ct").ct;
+  ct.one("expl").ct;
+  ct.one("ct").ct;
 
 })();</code></pre>
 
-<hr/>
+    </div>
+
+    <hr/>
 
     <div id="expl_source_code" class="code_cont"></div>
 
@@ -46,10 +115,11 @@ The Boost license apply, as described in the file <script type="text/javascript"
     <script type="text/javascript">
 ct( () => {
 
-    ct.def( one, (name) => `write_source_code(${name}_source_code,"${name}.js")` ).ct;
-
-    ct.one("expl").ct;
-    ct.one("ct").ct;
+  ct.def( one, (name) =>
+    `write_source_code(${name}_source_code,"${name}.js")` ).ct;
+    
+  ct.one("expl").ct;
+  ct.one("ct").ct;
 
 })();
     </script>

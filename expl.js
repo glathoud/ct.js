@@ -37,7 +37,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
     const h = ct( ( a, b, c ) =>
     {
-        // Local CT definition.  These 3 lines will be removed
+        // Local CT definition.  These 3 lines are removed
         // by the `ct()` call.
         ct.def( function expr( /*string*/x, /*string*/y, /*string*/z ) {
             return `(${x}+${y})/(${y}-${z})*${z}*${z}`;
@@ -59,7 +59,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
     
        (( a, b, c ) =>
        {
-           // Local CT definition.  These 3 lines will be removed
+           // Local CT definition.  These 3 lines are removed
            // by the `ct()` call.
            
        
@@ -86,7 +86,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
     
     const h = ct( ( a, b, c ) =>
     {
-        // Local CT definition.  The next line will be removed
+        // Local CT definition.  The next line is removed
         // by the `ct()` call.
         ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
 
@@ -106,11 +106,16 @@ const _wr = (name) => `console.log("${name}",${name})`;
     
        (( a, b, c ) =>
        {
-           // Local CT definition.  The next line will be removed
+           // Local CT definition.  The next line is removed
            // by the `ct()` call.
            
       
-           return [(a+b)/(b-c)*c*c, (a+c)/(c-b)*b*b, (b+a)/(a-c)*c*c, (b+c)/(c-a)*a*a, (c+a)/(a-b)*b*b, (c+b)/(b-a)*a*a];
+           return [(a+b)/(b-c)*c*c
+           , (a+c)/(c-b)*b*b
+           , (b+a)/(a-c)*c*c
+           , (b+c)/(c-a)*a*a
+           , (c+a)/(a-b)*b*b
+           , (c+b)/(b-a)*a*a];
        })
     */
     
@@ -137,7 +142,7 @@ const CONSTANT = [
     
     const h = ct( ( a, b, c ) =>
     {
-        // Local CT definition.  The next line will be removed
+        // Local CT definition.  The next line is removed
         // by the `ct()` call.
         ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
         
@@ -150,11 +155,16 @@ const CONSTANT = [
     
        (( a, b, c ) =>
        {
-           // Local CT definition.  The next line will be removed
+           // Local CT definition.  The next line is removed
            // by the `ct()` call.
            
       
-           return [(a+b)/(b-c)*c*c, (a+c)/(c-b)*b*b, (b+a)/(a-c)*c*c, (b+c)/(c-a)*a*a, (c+a)/(a-b)*b*b, (c+b)/(b-a)*a*a];
+           return [(a+b)/(b-c)*c*c
+           , (a+c)/(c-b)*b*b
+           , (b+a)/(a-c)*c*c
+           , (b+c)/(c-a)*a*a
+           , (c+a)/(a-b)*b*b
+           , (c+b)/(b-a)*a*a];
        })
     */
     

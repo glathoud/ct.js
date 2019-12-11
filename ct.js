@@ -56,7 +56,7 @@ ct._eval   = function ( code ) {
 
 // ct.* tools
 
-ct.def   = function ( /*function name (... ) { ... } | name, (...) => {...}*/g2 )
+ct.def   = function ( /*function | name, function*/g2 )
 {
     var x, name;
     try
@@ -96,7 +96,7 @@ ct.map = function ( /*(...)(...)*/g2 )
     var f = cache[ name ]  ||  ct[ name ]
     , arr = ct._eval( rest+')' )
     ;
-    return '['+arr.map( v => f.apply( cache, v ) ).join( ', ' )+']';
+    return '['+arr.map( v => f.apply( cache, v ) ).join( '\n        , ' )+']';
 }
 
 ct.mix = function ( g2 )
