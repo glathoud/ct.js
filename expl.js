@@ -6,7 +6,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
     // Pure function: no closure needed
     
-    var f = ct( (x) => { ct.mix(_wr("x")).ct; } );
+    const f = ct( (x) => { ct.mix(_wr("x")).ct; } );
 
     console.log(f); // js console output: ((x) => { console.log("x",x); })
     
@@ -21,7 +21,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
     // Closure needed: use `eval(''+ct(...))`
     
     var x = 1.234;
-    var g = eval( ''+ct( () => { ct.mix(_wr("x++")).ct; } ) );
+    const g = eval( ''+ct( () => { ct.mix(_wr("x++")).ct; } ) );
 
     console.log(g); // js console output: () => { console.log("x++",x++); }
     
@@ -35,7 +35,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
 (function () {
 
-    var h = ct( ( a, b, c, d ) =>
+    const h = ct( ( a, b, c, d ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
@@ -84,7 +84,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
     // Variant with ct.map
     
-    var h = ct( ( a, b, c, d ) =>
+    const h = ct( ( a, b, c, d ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
@@ -136,7 +136,7 @@ const CONSTANT = [
 
     // Variant with ct.map and a global constant
     
-    var h = ct( ( a, b, c, d ) =>
+    const h = ct( ( a, b, c, d ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
