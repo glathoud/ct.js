@@ -1,14 +1,14 @@
 // --- Statement examples  `ct...ct;`
 
-function _wr(name) { return `console.log("${name}",${name})`;}
+const _wr = (name) => `console.log("${name}",${name})`;
 
 (function () {
 
     // Pure function: no closure needed
     
-    var f = ct( function (x) { ct.mix(_wr("x")).ct; } );
+    var f = ct( (x) => { ct.mix(_wr("x")).ct; } );
 
-    console.log(f); // js console output: (function (x) { console.log("x",x); })
+    console.log(f); // js console output: ((x) => { console.log("x",x); })
     
     f(123); // js console output: x 123 
     f(456); // js console output: x 456
@@ -21,9 +21,9 @@ function _wr(name) { return `console.log("${name}",${name})`;}
     // Closure needed: use `eval(''+ct(...))`
     
     var x = 1.234;
-    var g = eval( ''+ct( function () { ct.mix(_wr("x++")).ct; } ) );
+    var g = eval( ''+ct( () => { ct.mix(_wr("x++")).ct; } ) );
 
-    console.log(g); // js console output: () { console.log("x++",x++); }
+    console.log(g); // js console output: () => { console.log("x++",x++); }
     
     g(); // js console output: x++ 1.234
     g(); // js console output: x++ 2.234
@@ -35,7 +35,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
 (function () {
 
-    var h = ct( function ( a, b, c, d )
+    var h = ct( ( a, b, c, d ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
@@ -57,7 +57,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
     /* js console output:
     
-       (function ( a, b, c, d )
+       (( a, b, c, d ) =>
        {
            // Local CT definition.  These 3 lines will be removed
            // by the `ct()` call.
@@ -84,7 +84,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
     // Variant with ct.map
     
-    var h = ct( function ( a, b, c, d )
+    var h = ct( ( a, b, c, d ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
@@ -106,7 +106,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
     /* js console output:
     
-       (function ( a, b, c, d )
+       (( a, b, c, d ) =>
        {
            // Local CT definition.  These 3 lines will be removed
            // by the `ct()` call.
@@ -136,7 +136,7 @@ const CONSTANT = [
 
     // Variant with ct.map and a global constant
     
-    var h = ct( function ( a, b, c, d )
+    var h = ct( ( a, b, c, d ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
@@ -151,7 +151,7 @@ const CONSTANT = [
 
     /* js console output:
     
-       (function ( a, b, c, d )
+       (( a, b, c, d ) =>
        {
            // Local CT definition.  These 3 lines will be removed
            // by the `ct()` call.
