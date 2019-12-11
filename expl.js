@@ -122,3 +122,48 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
 })();
 
+
+
+const CONSTANT = [
+    [ 'a', 'b', 'c' ]
+    , [ 'a', 'c', 'b' ]
+    , [ 'b', 'a', 'c' ]
+    , [ 'b', 'c', 'a' ]
+    , [ 'c', 'a', 'b' ]
+    , [ 'c', 'b', 'a' ]
+];
+
+(function () {
+
+    // Variant with ct.map and a global constant
+    
+    var h = ct( function ( a, b, c, d )
+    {
+        // Local CT definition.  These 3 lines will be removed
+        // by the `ct()` call.
+        ct.def( function expr( sx, sy, sz ) {
+            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
+        }).ct
+
+        return ct.map(expr)( CONSTANT ).ct;
+    } );
+
+    console.log( ''+h );
+
+    /* js console output:
+    
+       (function ( a, b, c, d )
+       {
+           // Local CT definition.  These 3 lines will be removed
+           // by the `ct()` call.
+           
+      
+           return [(a+b)/(b-c)*c*c,(a+c)/(c-b)*b*b,(b+a)/(a-c)*c*c,(b+c)/(c-a)*a*a,(c+a)/(a-b)*b*b,(c+b)/(b-a)*a*a];
+       })
+    */
+    
+    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
+    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
+
+})();
+
