@@ -35,7 +35,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
 (function () {
 
-    const h = ct( ( a, b, c, d ) =>
+    const h = ct( ( a, b, c ) =>
     {
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
@@ -57,7 +57,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
     /* js console output:
     
-       (( a, b, c, d ) =>
+       (( a, b, c ) =>
        {
            // Local CT definition.  These 3 lines will be removed
            // by the `ct()` call.
@@ -74,7 +74,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
        })
     */
     
-    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
+    console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
 })();
@@ -84,7 +84,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
     // Variant with ct.map, and a short definition of `expr`
     
-    const h = ct( ( a, b, c, d ) =>
+    const h = ct( ( a, b, c ) =>
     {
         // Local CT definition.  The next line will be removed
         // by the `ct()` call.
@@ -104,7 +104,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
     /* js console output:
     
-       (( a, b, c, d ) =>
+       (( a, b, c ) =>
        {
            // Local CT definition.  The next line will be removed
            // by the `ct()` call.
@@ -114,7 +114,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
        })
     */
     
-    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
+    console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
 })();
@@ -135,7 +135,7 @@ const CONSTANT = [
     // Variant with ct.map, and a short definition of `expr` and a
     // global constant
     
-    const h = ct( ( a, b, c, d ) =>
+    const h = ct( ( a, b, c ) =>
     {
         // Local CT definition.  The next line will be removed
         // by the `ct()` call.
@@ -148,7 +148,7 @@ const CONSTANT = [
 
     /* js console output:
     
-       (( a, b, c, d ) =>
+       (( a, b, c ) =>
        {
            // Local CT definition.  The next line will be removed
            // by the `ct()` call.
@@ -158,7 +158,7 @@ const CONSTANT = [
        })
     */
     
-    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
+    console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
 })();
