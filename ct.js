@@ -1,5 +1,5 @@
 /*
-  ct.js: Compile Time function execution in JavaScript
+  ct.js: Compile Time Function Execution (CTFE) in JavaScript
 
   Inspired from the CTFE of the D language.
   

@@ -39,15 +39,9 @@ function _wr(name) { return `console.log("${name}",${name})`;}
 
 (function () {
 
-    var h = ct( h0 );
-
-    console.log( ''+h );
-
-    h();
-
-    function h0( a, b, c, d )
+    var h = ct( function ( a, b, c, d )
     {
-        // Definition local to `h0`.  These 3 lines will be removed
+        // Local CT definition.  These 3 lines will be removed
         // by the call `ct( h0 )`.
         ct.def( function expr( sx, sy, sz ) {
             return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
@@ -61,8 +55,32 @@ function _wr(name) { return `console.log("${name}",${name})`;}
             , ct.expr( 'c', 'a', 'b' ).ct
             , ct.expr( 'c', 'b', 'a' ).ct
         ];
-    }
+    } );
+
+    console.log( ''+h );
+
+    /* js console output:
     
+       (function h0( a, b, c, d )
+       {
+           // Local CT definition.  These 3 lines will be removed
+           // by the call `ct( h0 )`.
+           ;
+       
+           return [
+               (a+b)/(b-c)*c*c
+               , (a+c)/(c-b)*b*b
+               , (b+a)/(a-c)*c*c
+               , (b+c)/(c-a)*a*a
+               , (c+a)/(a-b)*b*b
+               , (c+b)/(b-a)*a*a
+           ];
+       })
+    */
+    
+    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
+    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
+
 })();
 
 </script>
