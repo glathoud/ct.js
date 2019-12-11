@@ -1,129 +1,61 @@
 <!doctype html>
-<script type="text/javascript" src="ct.js"></script>
-<script type="text/javascript">
+<html>
+  <head>
+    <meta charset=utf-8/>
+    <script type="text/javascript" src="ct.js"></script>
+    <script type="text/javascript" src="expl.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">function href( s ) { document.write( '\x3Ca href="'+s+'"\x3E'+s+'\x3C/a\x3E' ); }</script>
+    <pre><code><a href="https://github.com/glathoud/ct.js">ct.js</a>: Compile Time Function Execution (CTFE) in JavaScript
+
+Inspired from the CTFE of the D language, ct.js permits to
+generate efficient code while maintaining expressiveness.
+  
+By <a href="..">G. Lathoud</a>, December 2019 and later. Contact: glat@glat.info
+The Boost license apply, as described in the file <script type="text/javascript">href('./LICENSE')</script>
+</code></pre>    
+
+    <hr/>
+    <p>Open your Developer Tools &amp; JS console to see the examples in action.
+
+    <h3>Sources</h3>
+
+    <p>The sources for <code>expl.js</code> and <code>ct.js</code> are displayed below. For fun, I used <code>ct.js</code> to dump and prettify the two source files:</p>
+
+    <pre><code class="prettyprint lang-js">ct( () => {
+
+    ct.def(function one( name ) {
+          return `write_source_code(${name}_source_code,"${name}.js")`
+    }).ct;
     
-function _wr(name) { return `console.log("${name}",${name})`;}
+    ct.one("expl").ct;
+    ct.one("ct").ct;
 
-// --- Statement examples  `ct...ct;`
+})();</code></pre>
 
-(function () {
+<hr/>
 
-    // Pure function: no closure needed
+    <div id="expl_source_code" class="code_cont"></div>
+
+    <hr/>
+
+    <div id="ct_source_code" class="code_cont"></div>
+
+    <link rel="stylesheet" type="text/css" href="web/prettify.css">
+    <script type="text/javascript" src="web/prettify.js"></script>
+    <script type="text/javascript" src="web/write_source_code.js"></script>
+    <script type="text/javascript">
+ct( () => {
+
+    ct.def(function one( name ) {
+          return `write_source_code(${name}_source_code,"${name}.js")`
+    }).ct;
     
-    var f = ct( function (x) { ct.mix(_wr("x")).ct; } );
-
-    console.log(f);
-    
-    f(123); // js console output: x 123 
-    f(456); // js console output: x 456
-    f(789); // js console output: x 789
-
-    
-})();
-
-(function () {
-
-    // Closure needed: use `eval(''+ct(...))`
-    
-    var x = 1.234;
-    var g = eval( ''+ct( function () { ct.mix(_wr("x++")).ct; } ) );
-
-    console.log(g);
-    
-    g(); // js console output: x++ 1.234
-    g(); // js console output: x++ 2.234
-    g(); // js console output: x++ 3.234
-    
-})();
-
-// --- Expression examples `ct...ct`
-
-(function () {
-
-    var h = ct( function ( a, b, c, d )
-    {
-        // Local CT definition.  These 3 lines will be removed
-        // by the `ct()` call.
-        ct.def( function expr( sx, sy, sz ) {
-            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
-        }).ct;
-
-        return [
-            ct.expr( 'a', 'b', 'c' ).ct
-            , ct.expr( 'a', 'c', 'b' ).ct
-            , ct.expr( 'b', 'a', 'c' ).ct
-            , ct.expr( 'b', 'c', 'a' ).ct
-            , ct.expr( 'c', 'a', 'b' ).ct
-            , ct.expr( 'c', 'b', 'a' ).ct
-        ];
-    } );
-
-    console.log( ''+h );
-
-    /* js console output:
-    
-       (function ( a, b, c, d )
-       {
-           // Local CT definition.  These 3 lines will be removed
-           // by the `ct()` call.
-           ;
-       
-           return [
-               (a+b)/(b-c)*c*c
-               , (a+c)/(c-b)*b*b
-               , (b+a)/(a-c)*c*c
-               , (b+c)/(c-a)*a*a
-               , (c+a)/(a-b)*b*b
-               , (c+b)/(b-a)*a*a
-           ];
-       })
-    */
-    
-    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
-    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
+    ct.one("expl").ct;
+    ct.one("ct").ct;
 
 })();
-
-
-(function () {
-
-    // Variant with ct.map
-    
-    var h = ct( function ( a, b, c, d )
-    {
-        // Local CT definition.  These 3 lines will be removed
-        // by the `ct()` call.
-        ct.def( function expr( sx, sy, sz ) {
-            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
-        }).ct;
-
-        return ct.map(expr)([
-            [ 'a', 'b', 'c' ]
-            , [ 'a', 'c', 'b' ]
-            , [ 'b', 'a', 'c' ]
-            , [ 'b', 'c', 'a' ]
-            , [ 'c', 'a', 'b' ]
-            , [ 'c', 'b', 'a' ]
-        ]).ct;
-    } );
-
-    console.log( ''+h );
-
-    /* js console output:
-    
-       (function ( a, b, c, d )
-       {
-           // Local CT definition.  These 3 lines will be removed
-           // by the `ct()` call.
-           ;
-      
-           return [(a+b)/(b-c)*c*c,(a+c)/(c-b)*b*b,(b+a)/(a-c)*c*c,(b+c)/(c-a)*a*a,(c+a)/(a-b)*b*b,(c+b)/(b-a)*a*a];
-       })
-    */
-    
-    console.log( h( 1.0, 2.0, 3.0, 4.0 ) );
-    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
-
-})();
-
-</script>
+    </script>
+    </body>
+</html>

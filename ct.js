@@ -15,7 +15,7 @@
  
     var f = ct( function (x) { ct.mix(_wr("x"));; } );
 
-  For more examples see the file ./index.html
+  For more examples see the file ./expl.js
 */
 
 function ct( /*function | string*/f_or_code )
