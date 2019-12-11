@@ -1,0 +1,31 @@
+<!doctype html>
+<script type="text/javascript" src="ct.js"></script>
+<script type="text/javascript">
+  function _wr(name) { return `console.log("${name}",${name})`;}
+
+  (function () {
+
+  // Pure function: no closure needed
+  
+  var f = ct( function (x) { ct.mixin(_wr("x"));; } );
+  
+  f(123);
+  f(456);
+  f(789);
+  
+  })();
+
+  (function () {
+
+  // Closure needed: use `eval(''+ct(...))`
+  
+  var x = 1.234;
+  var g = eval( ''+ct( function () { ct.mixin(_wr("x++"));; } ) );
+
+  g();
+  g();
+  g();
+
+})();
+
+</script>
