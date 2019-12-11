@@ -1,31 +1,68 @@
 <!doctype html>
 <script type="text/javascript" src="ct.js"></script>
 <script type="text/javascript">
-  function _wr(name) { return `console.log("${name}",${name})`;}
+function _wr(name) { return `console.log("${name}",${name})`;}
 
-  (function () {
+// --- Statement examples  `ct...ct;`
 
-  // Pure function: no closure needed
-  
-  var f = ct( function (x) { ct.mixin(_wr("x"));; } );
-  
-  f(123);
-  f(456);
-  f(789);
-  
-  })();
+(function () {
 
-  (function () {
+    // Pure function: no closure needed
+    
+    var f = ct( function (x) { ct.mixin(_wr("x")).ct; } );
 
-  // Closure needed: use `eval(''+ct(...))`
-  
-  var x = 1.234;
-  var g = eval( ''+ct( function () { ct.mixin(_wr("x++"));; } ) );
+    console.log(f);
+    
+    f(123);
+    f(456);
+    f(789);
 
-  g();
-  g();
-  g();
+    
+})();
 
+(function () {
+
+    // Closure needed: use `eval(''+ct(...))`
+    
+    var x = 1.234;
+    var g = eval( ''+ct( function () { ct.mixin(_wr("x++")).ct; } ) );
+
+    console.log(g);
+    
+    g();
+    g();
+    g();
+    
+})();
+
+// --- Expression examples `ct...ct`
+
+(function () {
+
+    var h = ct( h0 );
+
+    console.log( ''+h );
+
+    h();
+
+    function h0( a, b, c, d )
+    {
+        // Definition local to `h0`.  These 3 lines will be removed
+        // by the call `ct( h0 )`.
+        ct.def( function expr( sx, sy, sz ) {
+            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
+        }).ct;
+
+        return [
+            ct.expr( 'a', 'b', 'c' ).ct
+            , ct.expr( 'a', 'c', 'b' ).ct
+            , ct.expr( 'b', 'a', 'c' ).ct
+            , ct.expr( 'b', 'c', 'a' ).ct
+            , ct.expr( 'c', 'a', 'b' ).ct
+            , ct.expr( 'c', 'b', 'a' ).ct
+        ];
+    }
+    
 })();
 
 </script>
