@@ -40,7 +40,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
         ct.def( function expr( sx, sy, sz ) {
-            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
+            return `(${sx}+${sy})/(${sy}-${sz})*${sz}*${sz}`;
         }).ct
 
         return [
@@ -89,7 +89,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
         ct.def( function expr( sx, sy, sz ) {
-            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
+            return `(${sx}+${sy})/(${sy}-${sz})*${sz}*${sz}`;
         }).ct
 
         return ct.map(expr)([
@@ -141,7 +141,7 @@ const CONSTANT = [
         // Local CT definition.  These 3 lines will be removed
         // by the `ct()` call.
         ct.def( function expr( sx, sy, sz ) {
-            return '('+sx+'+'+sy+')/('+sy+'-'+sz+')*'+sz+'*'+sz;
+            return `(${sx}+${sy})/(${sy}-${sz})*${sz}*${sz}`;
         }).ct
 
         return ct.map(expr)( CONSTANT ).ct;
