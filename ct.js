@@ -36,11 +36,11 @@ function ct( /*function | string*/f_or_code )
     
     function replace_one( all, g1, g2 )
     {
-        if (ct[ g1 ])
-            return ct[ g1 ].call( cache, g2 );
-
         if (cache[ g1 ])
             return ct._eval.call( cache[ g1 ], 'this('+g2+')' );
+        
+        if (ct[ g1 ])
+            return ct[ g1 ].call( cache, g2 );
         
         null.unknown;
     }
