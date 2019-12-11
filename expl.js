@@ -8,7 +8,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
     
     var f = ct( function (x) { ct.mix(_wr("x")).ct; } );
 
-    console.log(f);
+    console.log(f); // js console output: (function (x) { console.log("x",x); })
     
     f(123); // js console output: x 123 
     f(456); // js console output: x 456
@@ -23,7 +23,7 @@ function _wr(name) { return `console.log("${name}",${name})`;}
     var x = 1.234;
     var g = eval( ''+ct( function () { ct.mix(_wr("x++")).ct; } ) );
 
-    console.log(g);
+    console.log(g); // js console output: () { console.log("x++",x++); }
     
     g(); // js console output: x++ 1.234
     g(); // js console output: x++ 2.234
