@@ -173,3 +173,95 @@ const CONSTANT = [
 
 })();
 
+(function () {
+
+    // .? operator
+
+    const f = ct( (o) => ct.opt( o.a.b.c ).ct  ||  null );
+
+    console.log( ''+f );
+    /* js console output:
+       ((o) =>  o
+               && (__CT_TMP__ =  o.a)
+               && (__CT_TMP__ = __CT_TMP__.b)
+               && (__CT_TMP__.c )  ||  null)
+    */   
+
+    console.log( f( {} ) ); // js console output: null
+
+    console.log( f( {a:{b:{}}} ) ) // js console output: null
+
+    console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
+
+})();
+
+(function () {
+
+    // .? operator
+
+    const f = ct( (o) => ct.opt( o,(1).b,"?".d ).ct  ||  null );
+
+    console.log( ''+f );
+    /* js console output:
+       ((o) =>  o
+               && (__CT_TMP__ =  o[(1)])
+               && (__CT_TMP__ = __CT_TMP__.b)
+               && (__CT_TMP__ = __CT_TMP__["?"])
+               && (__CT_TMP__.d )  ||  null)
+    */   
+
+    console.log( f( [] ) ); // js console output: null
+
+    console.log( f( [0,{b:{}}] ) ) // js console output: null
+
+    console.log( f( [0,{b:{"?":{d:789}}}] ) ) // js console output: 789
+
+})();
+
+(function () {
+
+    // Require an object
+
+    const f = ct( (o) => ct.req( o.a.b.c.d ).ct );
+
+    console.log( ''+f );
+    /* js console output:
+     ((o) => (  o  ||  ( o = {})
+             , (__CT_TMP__ =  o.a  ||  ( o.a = {}))
+             , (__CT_TMP__ = __CT_TMP__.b  ||  (__CT_TMP__.b = {}))
+             , (__CT_TMP__ = __CT_TMP__.c  ||  (__CT_TMP__.c = {}))
+             , (__CT_TMP__.d   ||  (__CT_TMP__.d  = {})) ))
+    */
+
+    var o = {}
+    ,   d = f( o )
+    ;
+    console.log(JSON.stringify( o )); // {"a":{"b":{"c":{"d":{}}}}}
+    console.log(JSON.stringify( d )); // {}
+    console.log(d === o.a.b.c.d)      // true
+    
+})();
+
+(function () {
+
+    // Require an object
+
+    const f = ct( (o) => ct.req( o,(1).b,"?".d ).ct );
+
+    console.log( ''+f );
+    /* js console output:
+    ((o) => (  o  ||  ( o = {})
+       , (__CT_TMP__ =  o[(1)]  ||  ( o[(1)] = {}))
+       , (__CT_TMP__ = __CT_TMP__.b  ||  (__CT_TMP__.b = {}))
+       , (__CT_TMP__ = __CT_TMP__["?"]  ||  (__CT_TMP__["?"] = {}))
+       , (__CT_TMP__.d   ||  (__CT_TMP__.d  = {})) ))
+    */
+
+    var a = []
+    ,   d = f( a )
+    ;
+    console.log(JSON.stringify( a ));// [null,{"b":{"?":{"d":{}}}}]
+    console.log(JSON.stringify( d ));// {}
+    console.log(d === a[1].b["?"].d);// true
+    
+})();

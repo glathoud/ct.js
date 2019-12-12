@@ -1,3 +1,5 @@
+/*global ct*/
+
 /*
   ct.js: Compile Time Function Execution (CTFE) in JavaScript
 
@@ -54,24 +56,29 @@ ct._eval   = function ( code ) {
     return new Function("return ("+code+")").call( this );
 };
 
+ct._tab    = '        ';
+
+ct.TMP     = '__CT_TMP__';
+
 // ct.* tools
 
 ct.def   = function ( /*function | name, function*/g2 )
 {
     var x, name;
-    try
+    
+    // ct.def( name, (...) => {...} )
+    var mo = g2.match( /^\s*(\w+)\s*,([\s\S]+)$/ );
+    if (mo)
+    {
+        name = mo[ 1 ];
+        x    = ct._eval( mo[ 2 ] );
+    }
+    else
     {
         // ct.def( function name (...) {...} )
         x = ct._eval( g2 );
         'function' === typeof x  ||  null.must_be_a_function;
         name = x.name;
-    }
-    catch (e)
-    {
-        // ct.def( name, (...) => {...} )
-        var mo = g2.match( /^\s*(\w+)\s*,([\s\S]+)$/ );
-        name = mo[ 1 ];
-        x    = ct._eval( mo[ 2 ] );
     }
     name  ||  null.missing_name;
     x.call.a;
@@ -86,7 +93,7 @@ ct.map = function ( /*(...)(...)*/g2 )
 {
     var cache = this;
     
-    var mo = g2.match( /^\s*([^\)]+)\s*\)([\s\S]*)$/ )
+    var mo = g2.match( /^\s*(\w+)\s*\)([\s\S]*)$/ )
     , name = mo[ 1 ]
     , rest = mo[ 2 ]
     ;
@@ -96,10 +103,90 @@ ct.map = function ( /*(...)(...)*/g2 )
     var f = cache[ name ]  ||  ct[ name ]
     , arr = ct._eval( rest+')' )
     ;
-    return '['+arr.map( v => f.apply( cache, v ) ).join( '\n        , ' )+']';
+    return '['+arr.map( function ( v ) { return f.apply( cache, v ); } ).join( '\n'+ct._tab+', ' )+']';
 }
 
 ct.mix = function ( g2 )
 {
     return ct._eval( g2 );
 }; 
+
+ct.opt = function ( g2 )
+/* Fetch an optional value. This is equivalent to the `.?` operator.
+
+Example:
+
+    const f = ct( (o) => ct.opt( o,(1).b,"?".d ).ct  ||  null );
+
+    console.log( f( [] ) ); // js console output: null
+
+    console.log( f( [0,{b:{}}] ) ) // js console output: null
+
+    console.log( f( [0,{b:{"?":{d:789}}}] ) ) // js console output: 789
+*/
+{
+    var mo = g2.match( /\s*(?:^|[\.,\s])[^\.,]+\s*/g )
+    ,  nm1 = mo.length - 1
+    ;
+    return mo.map( _ct_opt_one ).join( '\n'+ct._tab+'&& ' );
+
+    var _first;
+    function _ct_opt_one( s0, i )
+    {
+        if (i === 0)
+            return _first = s0;
+
+        var s = s0.charAt( 0 ) === '.'  ?  s0  :  '['+s0.slice( 1 )+']';
+
+        if (i === nm1)
+            return '('+ct.TMP+''+s+')';
+
+        if (i === 1)
+            return '('+ct.TMP+' = '+_first+s+')';
+        
+        return '('+ct.TMP+' = '+ct.TMP+''+s+')';
+    }
+};
+
+ct.req = function ( g2 )
+/* Ensure and fetch an object.
+
+Example:
+
+    const f = ct( (o) => ct.req( o,(1).b,"?".d ).ct );
+
+    var a = []
+    ,   d = f( a )
+    ;
+    console.log(JSON.stringify( a ));// [null,{"b":{"?":{"d":{}}}}]
+    console.log(JSON.stringify( d ));// {}
+    console.log(d === a[1].b["?"].d);// true
+*/
+{
+    var mo = g2.match( /\s*(?:^|[\.,\s])[^\.,]+\s*/g )
+    ,  nm1 = mo.length - 1
+    ;
+    return '( '+mo.map( _ct_req_one ).join( '\n'+ct._tab+', ' )+' )';
+
+    var _first;
+    function _ct_req_one( s0, i )
+    {
+        if (i === 0)
+            return _ct_req( _first = s0 );
+
+        var s = s0.charAt( 0 ) === '.'  ?  s0  :  '['+s0.slice( 1 )+']';
+
+        if (i === nm1)
+            return '('+_ct_req( ct.TMP+s )+')';
+
+        if (i === 1)
+            return '('+ct.TMP+' = '+_ct_req( _first+s )+')';
+        
+        return '('+ct.TMP+' = '+_ct_req( ct.TMP+''+s )+')';
+    }
+
+    function _ct_req( s )
+    {
+        return s+'  ||  ('+s+' = {})';
+    }
+};
