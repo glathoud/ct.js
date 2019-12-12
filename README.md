@@ -1,16 +1,12 @@
 # ct.js
 
-Compile-time function execution in JavaScript (inspired from the D language)
+### Compile-Time Function Execution (CTFE) in JavaScript (inspired from the D language)
 
-Examples: [expl.js](expl.js)
-
-...which rely on a minimal implementation: [ct.js](ct.js)
-
-There is also a [live page](https://glat.info/ct.js/) where you can see the whole code at once, and play with the examples in the JS Console.
-
-----
-
-Dump of the examples (for really actual ones see [expl.js](expl.js))
+This is a minimal experiment with CTFE to generate performant code
+while maintaining expressiveness.  
+ * Minimal implementation: [ct.js](ct.js)
+ * Examples: [expl.js](expl.js) - somewhat actual version copied below
+ * [live page](https://glat.info/ct.js/)
 
 ```js
 // --- Statement examples  `ct...ct;`
@@ -82,6 +78,16 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
 (function () {
 
+    // see also: ct.last
+    
+    const h = ct( arr => ct.at( arr[$-1] ).ct + 3.45 );
+
+    h( [ 10.0, 20.0, 30.0, 40.0 ] ) === 43.45  ||  null.bug;
+
+})();
+
+(function () {
+
     const h = ct( ( a, b, c ) =>
     {
         // Local CT definition.  These 3 lines are removed
@@ -124,12 +130,13 @@ const _wr = (name) => `console.log("${name}",${name})`;
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
+    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
 
 
 (function () {
 
-    // Variant with ct.map, and a short definition of `expr`
+    // Variant with ct.emap, and a short definition of `expr`
     
     const h = ct( ( a, b, c ) =>
     {
@@ -137,7 +144,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
         // by the `ct()` call.
         ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
 
-        return ct.map(expr)([
+        return ct.emap(expr)([
             [ 'a', 'b', 'c' ]
             , [ 'a', 'c', 'b' ]
             , [ 'b', 'a', 'c' ]
@@ -169,6 +176,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
+    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
 
 
@@ -184,7 +192,7 @@ const CONSTANT = [
 
 (function () {
 
-    // Variant with ct.map, and a short definition of `expr` and a
+    // Variant with ct.emap, and a short definition of `expr` and a
     // global constant
     
     const h = ct( ( a, b, c ) =>
@@ -193,7 +201,7 @@ const CONSTANT = [
         // by the `ct()` call.
         ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
         
-        return ct.map(expr)( CONSTANT ).ct;
+        return ct.emap(expr)( CONSTANT ).ct;
     } );
 
     console.log( ''+h );
@@ -218,7 +226,155 @@ const CONSTANT = [
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
+    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
+
+(function () {
+
+    const sum = ct( arr => {
+
+        var sum = 0;
+
+        ct.afor( i, arr ).ct
+        {
+            sum += arr[i];
+        }
+        
+        return sum;
+    } );
+
+    sum( [ 1, 20, 300, 4000 ] ) === 4321  ||  null.bug;
+    
+})();
+
+(function () {
+
+    const f = ct( arr => {
+
+        var ret = 0;
+
+        ct.afor( i, arr ).ct
+            ret += i * arr[i];
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ) === 12620  ||  null.bug;
+    
+})();
+
+
+(function () {
+
+    const f = ct( arr => {
+
+        var ret = 0;
+
+        ct.aforev( i, arr ).ct
+        {
+            ret += i * arr[i];
+        }
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ) === 12620  ||  null.bug;
+    
+})();
+
+
+(function () {
+
+    const f = ct( arr => {
+
+        var ret = [];
+
+        ct.aforev( i, arr ).ct
+        {
+            ret.push( i, arr[i] );
+        }
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ).join(',') === [3,4000,2,300,1,20,0,1].join(',')  ||  null.bug;
+    
+})();
+
+
+
+(function () {
+
+    // see also: ct.at
+    
+    const h = ct( arr => ct.last( arr ).ct + 3.45 );
+
+    h( [ 10.0, 20.0, 30.0, 40.0 ] ) === 43.45  ||  null.bug;
+
+})();
+
+
+(function () {
+
+    // Concise object definition
+
+    var f = ct( (o,a,b,c) => {
+        var d = a*3+b-2
+        ,   e = Math.sin( d*d-36 )
+        ;
+        return ct.obj( {a,b,c,d,e,q : d-e, some_long_one : o.$} ).ct;
+    });
+
+    console.log( ''+f );
+    /* js console output:
+
+       ((o,a,b,c) => {
+           var d = a*3+b-2
+           ,   e = Math.sin( d*d-36 )
+           ;
+           return {a : a
+           , b : b
+           , c : c
+           , d : d
+           , e : e
+           , q : d-e
+           , some_long_one : o. some_long_one};
+       })
+    */
+    console.log( JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) ) );
+    // js console.output: {"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}
+
+    JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) )
+        === `{"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}`
+        ||  null.bug;
+})();
+
+
+(function () {
+
+    var f = ct( (o) => {
+
+        var ret = [];
+
+        ct.ofor( k, o ).ct
+        {
+            ret.push( [ k, o[ k ] ] );
+        }
+
+        ret.sort( (a,b) => a[0] < b[0]  ?  -1  :  a[0] > b[0]  ?  +1  :  0 );
+
+        return ret;
+    });
+
+
+    var o0 = {a : 1, b : 2, c : 3}
+    ,   o  = Object.create( o0 )
+    ;
+    o.d = 4; o.e = 5; o.f = 6;
+
+    JSON.stringify( f( o ) ) === '[["a",1],["b",2],["c",3],["d",4],["e",5],["f",6]]'  ||  null.bug;
+})();
+
 
 (function () {
 
@@ -240,6 +396,10 @@ const CONSTANT = [
 
     console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
 
+    f({}) === null  ||  null.bug;
+    f({a:{b:{}}}) === null  ||  null.bug;
+    f( {a:{b:{c:123456}}} ) === 123456  ||  null.bug;
+    
 })();
 
 (function () {
@@ -263,6 +423,9 @@ const CONSTANT = [
 
     console.log( f( [0,{b:{"?":{d:789}}}] ) ) // js console output: 789
 
+    f([]) === null  ||  null.bug;
+    f( [0,{b:{}}] ) === null  ||  null.bug;
+    f( [0,{b:{"?":{d:789}}}] ) === 789  ||  null.bug;
 })();
 
 (function () {
@@ -283,9 +446,9 @@ const CONSTANT = [
     var o = {}
     ,   d = f( o )
     ;
-    console.log(JSON.stringify( o )); // {"a":{"b":{"c":{"d":{}}}}}
-    console.log(JSON.stringify( d )); // {}
-    console.log(d === o.a.b.c.d)      // true
+    JSON.stringify( o ) === `{"a":{"b":{"c":{"d":{}}}}}`  ||  null.bug;
+    JSON.stringify( d ) === `{}`  ||  null.bug;
+    d === o.a.b.c.d  ||  null.bug;
     
 })();
 
@@ -307,9 +470,9 @@ const CONSTANT = [
     var a = []
     ,   d = f( a )
     ;
-    console.log(JSON.stringify( a ));// [null,{"b":{"?":{"d":{}}}}]
-    console.log(JSON.stringify( d ));// {}
-    console.log(d === a[1].b["?"].d);// true
+    JSON.stringify( a ) === `[null,{"b":{"?":{"d":{}}}}]` ||  null.bug;
+    JSON.stringify( d ) === `{}`  ||  null.bug;
+    d === a[1].b["?"].d  ||  null.bug;
     
 })();
 ```
