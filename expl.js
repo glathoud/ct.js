@@ -231,12 +231,12 @@ const CONSTANT = [
 
     // .? operator
 
-    const f = ct( (o) => ct.opt( o,(1).b,"?".d ).ct  ||  null );
+    const f = ct( (o) => ct.opt( o[1].b["?"].d ).ct  ||  null );
 
     console.log( ''+f );
     /* js console output:
        ((o) =>  o
-               && (__CT_TMP__ =  o[(1)])
+               && (__CT_TMP__ =  o[1])
                && (__CT_TMP__ = __CT_TMP__.b)
                && (__CT_TMP__ = __CT_TMP__["?"])
                && (__CT_TMP__.d )  ||  null)
@@ -278,12 +278,12 @@ const CONSTANT = [
 
     // Require an object
 
-    const f = ct( (o) => ct.req( o,(1).b,"?".d ).ct );
+    const f = ct( (o) => ct.req( o[1].b["?"].d ).ct );
 
     console.log( ''+f );
     /* js console output:
     ((o) => (  o  ||  ( o = {})
-       , (__CT_TMP__ =  o[(1)]  ||  ( o[(1)] = {}))
+       , (__CT_TMP__ =  o[1]  ||  ( o[1] = {}))
        , (__CT_TMP__ = __CT_TMP__.b  ||  (__CT_TMP__.b = {}))
        , (__CT_TMP__ = __CT_TMP__["?"]  ||  (__CT_TMP__["?"] = {}))
        , (__CT_TMP__.d   ||  (__CT_TMP__.d  = {})) ))

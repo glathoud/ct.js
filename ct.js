@@ -125,18 +125,16 @@ Example:
     console.log( f( [0,{b:{"?":{d:789}}}] ) ) // js console output: 789
 */
 {
-    var mo = g2.match( /\s*(?:^|[\.,\s])[^\.,]+\s*/g )
+    var mo = g2.match( /\s*(?:^|[\.\[])[^\.\[]+\s*/g )
     ,  nm1 = mo.length - 1
     ;
     return mo.map( _ct_opt_one ).join( '\n'+ct._tab+'&& ' );
 
     var _first;
-    function _ct_opt_one( s0, i )
+    function _ct_opt_one( s, i )
     {
         if (i === 0)
-            return _first = s0;
-
-        var s = s0.charAt( 0 ) === '.'  ?  s0  :  '['+s0.slice( 1 )+']';
+            return _first = s;
 
         if (i === nm1)
             return '('+ct.TMP+''+s+')';
@@ -163,18 +161,16 @@ Example:
     console.log(d === a[1].b["?"].d);// true
 */
 {
-    var mo = g2.match( /\s*(?:^|[\.,\s])[^\.,]+\s*/g )
+    var mo = g2.match( /\s*(?:^|[\.\[])[^\.\[]+\s*/g )
     ,  nm1 = mo.length - 1
     ;
     return '( '+mo.map( _ct_req_one ).join( '\n'+ct._tab+', ' )+' )';
 
     var _first;
-    function _ct_req_one( s0, i )
+    function _ct_req_one( s, i )
     {
         if (i === 0)
-            return _ct_req( _first = s0 );
-
-        var s = s0.charAt( 0 ) === '.'  ?  s0  :  '['+s0.slice( 1 )+']';
+            return _ct_req( _first = s );
 
         if (i === nm1)
             return '('+_ct_req( ct.TMP+s )+')';
