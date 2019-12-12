@@ -220,6 +220,82 @@ const CONSTANT = [
 
 (function () {
 
+    const sum = ct( arr => {
+
+        var sum = 0;
+
+        ct.afor( i, arr ).ct
+        {
+            sum += arr[i];
+        }
+        
+        return sum;
+    } );
+
+    sum( [ 1, 20, 300, 4000 ] ) === 4321  ||  null.bug;
+    
+})();
+
+(function () {
+
+    const f = ct( arr => {
+
+        var ret = 0;
+
+        ct.afor( i, arr ).ct
+        {
+            ret += i * arr[i];
+        }
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ) === 12620  ||  null.bug;
+    
+})();
+
+
+(function () {
+
+    const f = ct( arr => {
+
+        var ret = 0;
+
+        ct.aforev( i, arr ).ct
+        {
+            ret += i * arr[i];
+        }
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ) === 12620  ||  null.bug;
+    
+})();
+
+
+(function () {
+
+    const f = ct( arr => {
+
+        var ret = [];
+
+        ct.aforev( i, arr ).ct
+        {
+            ret.push( i, arr[i] );
+        }
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ).join(',') === [3,4000,2,300,1,20,0,1].join(',')  ||  null.bug;
+    
+})();
+
+
+
+(function () {
+
     // see also: ct.at
     
     const h = ct( arr => ct.last( arr ).ct + 3.45 );

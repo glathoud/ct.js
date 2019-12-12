@@ -62,6 +62,24 @@ ct.TMP     = '__CT_TMP__';
 
 // ct.* tools
 
+ct.afor = function ( /*i,arr*/g2 )
+{
+    var mo = g2.match( /^\s*(\w+)\s*,\s*([\s\S]+)\s*$/ )
+    ,    i = mo[ 1 ]
+    ,  arr = mo[ 2 ]
+    ;
+    return 'for (var '+i+' = 0, '+i+'_end = '+arr+'.length; '+i+' < '+i+'_end; ++'+i+')';
+};
+
+ct.aforev = function ( /*i,arr*/g2 )
+{
+    var mo = g2.match( /^\s*(\w+)\s*,\s*([\s\S]+)\s*$/ )
+    ,    i = mo[ 1 ]
+    ,  arr = mo[ 2 ]
+    ;
+    return 'for (var '+i+' = '+arr+'.length; '+i+'--;)';
+};
+
 ct.at    = function ( /*name[...]*/g2 )
 // See also: ct.last
 {
@@ -118,7 +136,7 @@ ct.emap = function ( /*(...)(...)*/g2 )
 ct.last = function ( g2 )
 {
     return ct.at( g2+'[$-1]' );
-}
+};
 
 ct.mix = function ( g2 )
 {
