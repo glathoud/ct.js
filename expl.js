@@ -109,12 +109,13 @@ const _wr = (name) => `console.log("${name}",${name})`;
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
+    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
 
 
 (function () {
 
-    // Variant with ct.map, and a short definition of `expr`
+    // Variant with ct.emap, and a short definition of `expr`
     
     const h = ct( ( a, b, c ) =>
     {
@@ -122,7 +123,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
         // by the `ct()` call.
         ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
 
-        return ct.map(expr)([
+        return ct.emap(expr)([
             [ 'a', 'b', 'c' ]
             , [ 'a', 'c', 'b' ]
             , [ 'b', 'a', 'c' ]
@@ -169,7 +170,7 @@ const CONSTANT = [
 
 (function () {
 
-    // Variant with ct.map, and a short definition of `expr` and a
+    // Variant with ct.emap, and a short definition of `expr` and a
     // global constant
     
     const h = ct( ( a, b, c ) =>
@@ -178,7 +179,7 @@ const CONSTANT = [
         // by the `ct()` call.
         ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
         
-        return ct.map(expr)( CONSTANT ).ct;
+        return ct.emap(expr)( CONSTANT ).ct;
     } );
 
     console.log( ''+h );

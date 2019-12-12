@@ -89,7 +89,7 @@ ct.def   = function ( /*function | name, function*/g2 )
     return '';  // Code removed
 };
 
-ct.map = function ( /*(...)(...)*/g2 )
+ct.emap = function ( /*(...)(...)*/g2 )
 {
     var cache = this;
     
