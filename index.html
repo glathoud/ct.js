@@ -91,7 +91,7 @@ The Boost license apply, as described in the file <script type="text/javascript"
     <p>The sources for <code>expl.js</code> and <code>ct.js</code> are displayed below. For fun, I used <code>ct.js</code> to dump and prettify the two source files:</p>
 
     <pre><code class="prettyprint lang-js">ct( () => {
-  ct.def( one, (name) =>
+  ct.def( one, (s) =>
     `write_source_code(${s}_source_code,"${s}.js")` ).ct;
     
   ct.one("expl").ct;
@@ -112,7 +112,7 @@ The Boost license apply, as described in the file <script type="text/javascript"
     <script type="text/javascript">
 ct( () => {
 
-  ct.def( one, (name) =>
+  ct.def( one, (s) =>
     `write_source_code(${s}_source_code,"${s}.js")` ).ct;
     
   ct.one("expl").ct;
