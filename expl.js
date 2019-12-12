@@ -375,7 +375,7 @@ const CONSTANT = [
     /* js console output:
        ((o) =>  o
                && ct._tmp =  o.a)
-               && ct._tmp = __CT_TMP__.b)
+               && ct._tmp = ct._tmp.b)
                && ct._tmp.c )  ||  null)
     */   
 
@@ -401,8 +401,8 @@ const CONSTANT = [
     /* js console output:
        ((o) =>  o
                && ct._tmp =  o[1])
-               && ct._tmp = __CT_TMP__.b)
-               && ct._tmp = __CT_TMP__["?"])
+               && ct._tmp = ct._tmp.b)
+               && ct._tmp = ct._tmp["?"])
                && ct._tmp.d )  ||  null)
     */   
 
@@ -427,8 +427,8 @@ const CONSTANT = [
     /* js console output:
      ((o) => (  o  ||  ( o = {})
              , ct._tmp =  o.a  ||  ( o.a = {}))
-             , ct._tmp = __CT_TMP__.b  ||  ct._tmp.b = {}))
-             , ct._tmp = __CT_TMP__.c  ||  ct._tmp.c = {}))
+             , ct._tmp = ct._tmp.b  ||  ct._tmp.b = {}))
+             , ct._tmp = ct._tmp.c  ||  ct._tmp.c = {}))
              , ct._tmp.d   ||  ct._tmp.d  = {})) ))
     */
 
@@ -451,8 +451,8 @@ const CONSTANT = [
     /* js console output:
     ((o) => (  o  ||  ( o = {})
        , ct._tmp =  o[1]  ||  ( o[1] = {}))
-       , ct._tmp = __CT_TMP__.b  ||  ct._tmp.b = {}))
-       , ct._tmp = __CT_TMP__["?"]  ||  ct._tmp["?"] = {}))
+       , ct._tmp = ct._tmp.b  ||  ct._tmp.b = {}))
+       , ct._tmp = ct._tmp["?"]  ||  ct._tmp["?"] = {}))
        , ct._tmp.d   ||  ct._tmp.d  = {})) ))
     */
 
