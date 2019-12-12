@@ -110,8 +110,8 @@ See also: ct.last
 
 ct.def   = function ( /*function | name, function*/g2 )
 /*
-  ct.def( one, (name) =>
-    `write_source_code(${name}_source_code,"${name}.js")` ).ct;
+  ct.def( one, (s) =>
+    `write_source_code(${s}_source_code,"${s}.js")` ).ct;
     
   ct.one("expl").ct;
   ct.one("ct").ct;
