@@ -111,6 +111,37 @@ ct.mix = function ( g2 )
     return ct._eval( g2 );
 }; 
 
+ct.obj = function ( g2 )
+{
+    var core = g2.match( /^\s*\{(.*)\}\s*$/ )[ 1 ];
+    
+    return '{'+ (core.split( ',' ).map( _ct_obj_one ).join( '\n'+ct._tab+', '))+'}';
+
+    function _ct_obj_one( one )
+    {
+        var a = one.split( ':' )
+        ,   a0
+        ,   a1
+        ;
+        if (a.length === 1)
+        {
+            a0 = a1 = a[ 0 ];
+        }
+        else if (a.length === 2)
+        {
+            a0 = a[ 0 ];
+            a1 = a[ 1 ].replace( /\$/g, a0 );
+        }
+        else
+        {
+            null.invalid;
+        }
+
+        return a0.replace( /^\s*|\s*$/g, '' ) + ' : ' + a1.replace( /^\s*|\s*$/g, '' );
+    }
+}
+
+
 ct.opt = function ( g2 )
 /* Fetch an optional value. This is equivalent to the `.?` operator.
 
