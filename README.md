@@ -1,6 +1,8 @@
-# ct.js [live page](https://glat.info/ct.js/)
+# ct.js 
 
 ### Compile-Time Function Execution (CTFE) in JavaScript (inspired from the D language)
+
+[[live page](https://glat.info/ct.js/)]
 
 This is a minimal experiment with CTFE to generate performant code
 while maintaining expressiveness.  
