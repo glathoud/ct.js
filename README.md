@@ -4,9 +4,9 @@
 
 [[live page](https://glat.info/ct.js/)]
 
-This is a minimal experiment with CTFE to generate performant code
+This is a minimalistic experiment with CTFE to generate performant code
 while maintaining expressiveness.  
- * Minimal implementation: [ct.js](ct.js)
+ * Minimalistic implementation: [ct.js](ct.js)
  * Examples: [expl.js](expl.js) - somewhat actual version copied below
 
 ```js
