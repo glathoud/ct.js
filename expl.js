@@ -243,9 +243,7 @@ const CONSTANT = [
         var ret = 0;
 
         ct.afor( i, arr ).ct
-        {
             ret += i * arr[i];
-        }
         
         return ret;
     } );
