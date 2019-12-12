@@ -220,6 +220,24 @@ const CONSTANT = [
 
 (function () {
 
+    const f = ct( arr => {
+
+        var ret = [];
+
+        ct.afor( i, arr ).ct
+        {
+            ret.push( i, arr[ i ] );
+        }
+        
+        return ret;
+    } );
+
+    f( [ 1, 20, 300, 4000 ] ).join( ',' ) === [0,1,1,20,2,300,3,4000].join( ',' )  ||  null.bug;
+    
+})();
+
+(function () {
+
     const sum = ct( arr => {
 
         var sum = 0;
