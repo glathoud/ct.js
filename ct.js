@@ -89,6 +89,8 @@ ct.at    = function ( /*name[...]*/g2 )
 
 ct.def   = function ( /*function | name, function*/g2 )
 {
+    var cache = this;
+    
     var x, name;
     
     // ct.def( name, (...) => {...} )
@@ -108,7 +110,6 @@ ct.def   = function ( /*function | name, function*/g2 )
     name  ||  null.missing_name;
     x.call.a;
     
-    var cache = this;
     cache[ name ] = x;
 
     return '';  // Code removed
