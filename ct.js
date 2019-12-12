@@ -190,3 +190,20 @@ Example:
         return s+'  ||  ('+s+' = {})';
     }
 };
+
+ct.wr = function ( g2 )
+/* `ct.wr(g2).ct` is a shortcut for `ct.mix(_wr("<g2>")).ct`
+
+Example:
+
+    const f = ct( (x) => { ct.wr(x).ct; } );
+
+    console.log(f); // js console output: ((x) => { console.log("x",x); })
+    
+    f(123); // js console output: x 123 
+    f(456); // js console output: x 456
+    f(789); // js console output: x 789
+*/
+{
+    return 'console.log("'+g2.replace(/"/g,'\\"')+'",'+g2+')';
+}
