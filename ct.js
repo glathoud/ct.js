@@ -173,6 +173,16 @@ ct.obj = function ( g2 )
     }
 }
 
+ct.ofor = function ( /*k,obj*/g2 )
+{
+    var mo = g2.match( /^\s*(\w+)\s*,\s*([\s\S]+?)\s*$/ )
+    ,    k = mo[ 1 ]
+    ,  obj = mo[ 2 ]
+    ;
+    return 'var __ct_emptyObj = {}; for (var '+k+' in '+obj+') if (!('+k+' in __ct_emptyObj))';
+}
+
+
 
 ct.opt = function ( g2 )
 /* Fetch an optional value. This is equivalent to the `.?` operator.

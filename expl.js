@@ -341,6 +341,32 @@ const CONSTANT = [
 
 (function () {
 
+    var f = ct( (o) => {
+
+        var ret = [];
+
+        ct.ofor( k, o ).ct
+        {
+            ret.push( [ k, o[ k ] ] );
+        }
+
+        ret.sort( (a,b) => a[0] < b[0]  ?  -1  :  a[0] > b[0]  ?  +1  :  0 );
+
+        return ret;
+    });
+
+
+    var o0 = {a : 1, b : 2, c : 3}
+    ,   o  = Object.create( o0 )
+    ;
+    o.d = 4; o.e = 5; o.f = 6;
+
+    JSON.stringify( f( o ) ) === '[["a",1],["b",2],["c",3],["d",4],["e",5],["f",6]]'  ||  null.bug;
+})();
+
+
+(function () {
+
     // .? operator
 
     const f = ct( (o) => ct.opt( o.a.b.c ).ct  ||  null );
