@@ -15,7 +15,7 @@
 
     function _wr(name) { return `console.log("${name}",${name})`;}
  
-    var f = ct( function (x) { ct.mix(_wr("x"));; } );
+    var f = ct( function (x) { ct.mix(_wr("x")).ct; } );
 
   For more examples see the file ./expl.js
 */
@@ -193,7 +193,7 @@ ct.mix = function ( g2 )
 /*
     function _wr(name) { return `console.log("${name}",${name})`;}
  
-    var f = ct( function (x) { ct.mix(_wr("x"));; } );
+    var f = ct( function (x) { ct.mix(_wr("x")).ct; } );
 */
 {
     return ct._eval( g2 );
