@@ -77,11 +77,11 @@ ct.for( i, arr ).ct
     return 'for (var '+i+' = 0, '+i+'_end = '+arr+'.length; '+i+' < '+i+'_end; ++'+i+')';
 };
 
-ct.aforev = function ( /*i,arr*/g2 )
+ct.arof = function ( /*i,arr*/g2 )
 /*
   var x = [];
   
-  ct.aforev( k, myarr )
+  ct.arof( k, myarr )
   {
     x.push( k, myarr[ k ] );
   }

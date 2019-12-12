@@ -289,7 +289,7 @@ const CONSTANT = [
 
         var ret = 0;
 
-        ct.aforev( i, arr ).ct
+        ct.arof( i, arr ).ct
         {
             ret += i * arr[i];
         }
@@ -308,7 +308,7 @@ const CONSTANT = [
 
         var ret = [];
 
-        ct.aforev( i, arr ).ct
+        ct.arof( i, arr ).ct
         {
             ret.push( i, arr[i] );
         }
