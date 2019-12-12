@@ -1,4 +1,4 @@
-# ct.js
+# ct.js [live page](https://glat.info/ct.js/)
 
 ### Compile-Time Function Execution (CTFE) in JavaScript (inspired from the D language)
 
@@ -6,7 +6,6 @@ This is a minimal experiment with CTFE to generate performant code
 while maintaining expressiveness.  
  * Minimal implementation: [ct.js](ct.js)
  * Examples: [expl.js](expl.js) - somewhat actual version copied below
- * [live page](https://glat.info/ct.js/)
 
 ```js
 // --- Statement examples  `ct...ct;`
