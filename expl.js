@@ -8,7 +8,8 @@ const _wr = (name) => `console.log("${name}",${name})`;
     
     const f = ct( (x) => { ct.mix(_wr("x")).ct; } );
 
-    console.log(f); // js console output: ((x) => { console.log("x",x); })
+    console.log(f);
+    // js console output: ((x) => { console.log("x",x); })
     
     f(123); // js console output: x 123 
     f(456); // js console output: x 456
@@ -23,7 +24,8 @@ const _wr = (name) => `console.log("${name}",${name})`;
     var x = 1.234;
     const g = eval( ''+ct( () => { ct.mix(_wr("x++")).ct; } ) );
 
-    console.log(g); // js console output: () => { console.log("x++",x++); }
+    console.log(g);
+    // js console output: () => { console.log("x++",x++); }
     
     g(); // js console output: x++ 1.234
     g(); // js console output: x++ 2.234
@@ -40,7 +42,8 @@ const _wr = (name) => `console.log("${name}",${name})`;
     
     const f = ct( (x) => { ct.wr(x).ct; } );
 
-    console.log(f); // js console output: ((x) => { console.log("x",x); })
+    console.log(f);
+    // js console output: ((x) => { console.log("x",x); })
     
     f(123); // js console output: x 123 
     f(456); // js console output: x 456
@@ -55,7 +58,8 @@ const _wr = (name) => `console.log("${name}",${name})`;
     var x = 1.234;
     const g = eval( ''+ct( () => { ct.wr(x++).ct; } ) );
 
-    console.log(g); // js console output: () => { console.log("x++",x++); }
+    console.log(g);
+    // js console output: () => { console.log("x++",x++); }
     
     g(); // js console output: x++ 1.234
     g(); // js console output: x++ 2.234
@@ -119,7 +123,9 @@ const _wr = (name) => `console.log("${name}",${name})`;
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
-    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
+    h( 1.0, 2.0, 3.0 ).join(',')
+        === [-27, 16, -13.5, 2.5, -16, 5].join(',')
+        ||  null.bug;
 })();
 
 
@@ -165,7 +171,9 @@ const _wr = (name) => `console.log("${name}",${name})`;
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
-    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
+    h( 1.0, 2.0, 3.0 ).join(',')
+        === [-27, 16, -13.5, 2.5, -16, 5].join(',')
+        ||  null.bug;
 })();
 
 
@@ -215,7 +223,9 @@ const CONSTANT = [
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
-    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
+    h( 1.0, 2.0, 3.0 ).join(',')
+        === [-27, 16, -13.5, 2.5, -16, 5].join(',')
+        ||  null.bug;
 })();
 
 (function () {
@@ -232,7 +242,9 @@ const CONSTANT = [
         return ret;
     } );
 
-    f( [ 1, 20, 300, 4000 ] ).join( ',' ) === [0,1,1,20,2,300,3,4000].join( ',' )  ||  null.bug;
+    f( [ 1, 20, 300, 4000 ] ).join( ',' )
+        === [0,1,1,20,2,300,3,4000].join( ',' )
+        ||  null.bug;
     
 })();
 
@@ -379,7 +391,9 @@ const CONSTANT = [
     ;
     o.d = 4; o.e = 5; o.f = 6;
 
-    JSON.stringify( f( o ) ) === '[["a",1],["b",2],["c",3],["d",4],["e",5],["f",6]]'  ||  null.bug;
+    JSON.stringify( f( o ) )
+        === '[["a",1],["b",2],["c",3],["d",4],["e",5],["f",6]]'
+        ||  null.bug;
 })();
 
 

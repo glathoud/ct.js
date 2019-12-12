@@ -58,9 +58,17 @@ ct._eval   = function ( code ) {
 
 ct._tab    = '        ';
 
-// ct.* tools
+// -------------------- ct.* tools --------------------
 
 ct.afor = function ( /*i,arr*/g2 )
+/*
+var sum = 0.0;
+
+ct.for( i, arr ).ct
+{
+  sum += arr[ i ];
+}
+*/
 {
     var mo = g2.match( /^\s*(\w+)\s*,\s*([\s\S]+)\s*$/ )
     ,    i = mo[ 1 ]
@@ -70,6 +78,14 @@ ct.afor = function ( /*i,arr*/g2 )
 };
 
 ct.aforev = function ( /*i,arr*/g2 )
+/*
+  var x = [];
+  
+  ct.aforev( k, myarr )
+  {
+    x.push( k, myarr[ k ] );
+  }
+*/
 {
     var mo = g2.match( /^\s*(\w+)\s*,\s*([\s\S]+)\s*$/ )
     ,    i = mo[ 1 ]
@@ -79,7 +95,12 @@ ct.aforev = function ( /*i,arr*/g2 )
 };
 
 ct.at    = function ( /*name[...]*/g2 )
-// See also: ct.last
+/* ct.at( arr[$-1] ).ct
+
+ct.at( arr[$-2]).ct
+
+See also: ct.last
+*/
 {
     var mo = g2.match( /^\s*(\w+)\s*([\s\S]+)$/ )
     , name = mo[ 1 ]
@@ -88,6 +109,13 @@ ct.at    = function ( /*name[...]*/g2 )
 }
 
 ct.def   = function ( /*function | name, function*/g2 )
+/*
+  ct.def( one, (name) =>
+    `write_source_code(${name}_source_code,"${name}.js")` ).ct;
+    
+  ct.one("expl").ct;
+  ct.one("ct").ct;
+ */
 {
     var cache = this;
     
@@ -116,6 +144,23 @@ ct.def   = function ( /*function | name, function*/g2 )
 };
 
 ct.emap = function ( /*(...)(...)*/g2 )
+/*
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)([
+            [ 'a', 'b', 'c' ]
+            , [ 'a', 'c', 'b' ]
+            , [ 'b', 'a', 'c' ]
+            , [ 'b', 'c', 'a' ]
+            , [ 'c', 'a', 'b' ]
+            , [ 'c', 'b', 'a' ]
+        ]).ct;
+    } );
+*/
 {
     var cache = this;
     
@@ -133,16 +178,31 @@ ct.emap = function ( /*(...)(...)*/g2 )
 }
 
 ct.last = function ( g2 )
+/* ct.last( arr ).ct */
 {
     return ct.at( g2+'[$-1]' );
 };
 
 ct.mix = function ( g2 )
+/*
+    function _wr(name) { return `console.log("${name}",${name})`;}
+ 
+    var f = ct( function (x) { ct.mix(_wr("x"));; } );
+*/
 {
     return ct._eval( g2 );
 }; 
 
 ct.obj = function ( g2 )
+/* Example:
+
+    var f = ct( (o,a,b,c) => {
+        var d = a*3+b-2
+        ,   e = Math.sin( d*d-36 )
+        ;
+        return ct.obj( {a,b,c,d,e,q : d-e, some_long_one : o.$} ).ct;
+    });
+*/
 {
     var core = g2.match( /^\s*\{(.*)\}\s*$/ )[ 1 ];
     
