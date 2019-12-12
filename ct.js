@@ -233,6 +233,31 @@ ct.obj = function ( g2 )
 }
 
 ct.ofor = function ( /*k,obj*/g2 )
+/*
+    var f = ct( (o) => {
+
+        var ret = [];
+
+        ct.ofor( k, o ).ct
+        {
+            ret.push( [ k, o[ k ] ] );
+        }
+
+        ret.sort( (a,b) => a[0] < b[0]  ?  -1  :  a[0] > b[0]  ?  +1  :  0 );
+
+        return ret;
+    });
+
+
+    var o0 = {a : 1, b : 2, c : 3}
+    ,   o  = Object.create( o0 )
+    ;
+    o.d = 4; o.e = 5; o.f = 6;
+
+    JSON.stringify( f( o ) )
+        === '[["a",1],["b",2],["c",3],["d",4],["e",5],["f",6]]'
+        ||  null.bug;
+*/
 {
     var mo = g2.match( /^\s*(\w+)\s*,\s*([\s\S]+?)\s*$/ )
     ,    k = mo[ 1 ]
