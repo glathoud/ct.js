@@ -219,7 +219,7 @@ Example:
     }
 };
 
-ct.req = function ( g2 )
+ct.oreq = function ( g2 )
 /* Ensure and fetch an object.
 
 Example:

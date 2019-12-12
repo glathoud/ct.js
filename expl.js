@@ -421,7 +421,7 @@ const CONSTANT = [
 
     // Require an object
 
-    const f = ct( (o) => ct.req( o.a.b.c.d ).ct );
+    const f = ct( (o) => ct.oreq( o.a.b.c.d ).ct );
 
     console.log( ''+f );
     /* js console output:
@@ -445,7 +445,7 @@ const CONSTANT = [
 
     // Require an object
 
-    const f = ct( (o) => ct.req( o[1].b["?"].d ).ct );
+    const f = ct( (o) => ct.oreq( o[1].b["?"].d ).ct );
 
     console.log( ''+f );
     /* js console output:
