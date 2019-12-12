@@ -155,6 +155,7 @@ const _wr = (name) => `console.log("${name}",${name})`;
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
+    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
 
 
@@ -204,6 +205,7 @@ const CONSTANT = [
     console.log( h( 1.0, 2.0, 3.0 ) );
     // js console output: [-27, 16, -13.5, 2.5, -16, 5]
 
+    h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
 
 (function () {
@@ -236,6 +238,9 @@ const CONSTANT = [
     console.log( JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) ) );
     // js console.output: {"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}
 
+    JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) )
+        === `{"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}`
+        ||  null.bug;
 })();
 
 
@@ -259,6 +264,10 @@ const CONSTANT = [
 
     console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
 
+    f({}) === null  ||  null.bug;
+    f({a:{b:{}}}) === null  ||  null.bug;
+    f( {a:{b:{c:123456}}} ) === 123456  ||  null.bug;
+    
 })();
 
 (function () {
@@ -282,6 +291,9 @@ const CONSTANT = [
 
     console.log( f( [0,{b:{"?":{d:789}}}] ) ) // js console output: 789
 
+    f([]) === null  ||  null.bug;
+    f( [0,{b:{}}] ) === null  ||  null.bug;
+    f( [0,{b:{"?":{d:789}}}] ) === 789  ||  null.bug;
 })();
 
 (function () {
@@ -302,9 +314,9 @@ const CONSTANT = [
     var o = {}
     ,   d = f( o )
     ;
-    console.log(JSON.stringify( o )); // {"a":{"b":{"c":{"d":{}}}}}
-    console.log(JSON.stringify( d )); // {}
-    console.log(d === o.a.b.c.d)      // true
+    JSON.stringify( o ) === `{"a":{"b":{"c":{"d":{}}}}}`  ||  null.bug;
+    JSON.stringify( d ) === `{}`  ||  null.bug;
+    d === o.a.b.c.d  ||  null.bug;
     
 })();
 
@@ -326,8 +338,8 @@ const CONSTANT = [
     var a = []
     ,   d = f( a )
     ;
-    console.log(JSON.stringify( a ));// [null,{"b":{"?":{"d":{}}}}]
-    console.log(JSON.stringify( d ));// {}
-    console.log(d === a[1].b["?"].d);// true
+    JSON.stringify( a ) === `[null,{"b":{"?":{"d":{}}}}]` ||  null.bug;
+    JSON.stringify( d ) === `{}`  ||  null.bug;
+    d === a[1].b["?"].d  ||  null.bug;
     
 })();
