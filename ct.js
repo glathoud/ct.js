@@ -7,7 +7,7 @@
   generate efficient code while maintaining expressiveness.
   
   By G. Lathoud, December 2019 and later. Contact: glat@glat.info
-  The Boost license apply, as described in the file ./LICENSE
+  The Boost license applies, as described in the file ./LICENSE
 */
 
 
