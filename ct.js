@@ -115,6 +115,9 @@ ct.def   = function ( /*function | name, function*/g2 )
     
   ct.one("expl").ct;
   ct.one("ct").ct;
+
+
+  See also: ct.emap
  */
 {
     var cache = this;
@@ -160,6 +163,9 @@ ct.emap = function ( /*(...)(...)*/g2 )
             , [ 'c', 'b', 'a' ]
         ]).ct;
     } );
+
+
+    See also: ct.def
 */
 {
     var cache = this;
