@@ -279,7 +279,7 @@ ct.opt = function ( g2 )
 
 Example:
 
-    const f = ct( (o) => ct.opt( o,(1).b,"?".d ).ct  ||  null );
+    const f = ct( (o) => ct.opt( o[1].b["?"].d ).ct  ||  null );
 
     console.log( f( [] ) ); // js console output: null
 
@@ -314,7 +314,7 @@ ct.oreq = function ( g2 )
 
 Example:
 
-    const f = ct( (o) => ct.req( o,(1).b,"?".d ).ct );
+    const f = ct( (o) => ct.req( o[1].b["?"].d ).ct );
 
     var a = []
     ,   d = f( a )
