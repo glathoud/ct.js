@@ -374,9 +374,9 @@ const CONSTANT = [
     console.log( ''+f );
     /* js console output:
        ((o) =>  o
-               && (__CT_TMP__ =  o.a)
-               && (__CT_TMP__ = __CT_TMP__.b)
-               && (__CT_TMP__.c )  ||  null)
+               && ct._tmp =  o.a)
+               && ct._tmp = __CT_TMP__.b)
+               && ct._tmp.c )  ||  null)
     */   
 
     console.log( f( {} ) ); // js console output: null
@@ -400,10 +400,10 @@ const CONSTANT = [
     console.log( ''+f );
     /* js console output:
        ((o) =>  o
-               && (__CT_TMP__ =  o[1])
-               && (__CT_TMP__ = __CT_TMP__.b)
-               && (__CT_TMP__ = __CT_TMP__["?"])
-               && (__CT_TMP__.d )  ||  null)
+               && ct._tmp =  o[1])
+               && ct._tmp = __CT_TMP__.b)
+               && ct._tmp = __CT_TMP__["?"])
+               && ct._tmp.d )  ||  null)
     */   
 
     console.log( f( [] ) ); // js console output: null
@@ -426,10 +426,10 @@ const CONSTANT = [
     console.log( ''+f );
     /* js console output:
      ((o) => (  o  ||  ( o = {})
-             , (__CT_TMP__ =  o.a  ||  ( o.a = {}))
-             , (__CT_TMP__ = __CT_TMP__.b  ||  (__CT_TMP__.b = {}))
-             , (__CT_TMP__ = __CT_TMP__.c  ||  (__CT_TMP__.c = {}))
-             , (__CT_TMP__.d   ||  (__CT_TMP__.d  = {})) ))
+             , ct._tmp =  o.a  ||  ( o.a = {}))
+             , ct._tmp = __CT_TMP__.b  ||  ct._tmp.b = {}))
+             , ct._tmp = __CT_TMP__.c  ||  ct._tmp.c = {}))
+             , ct._tmp.d   ||  ct._tmp.d  = {})) ))
     */
 
     var o = {}
@@ -450,10 +450,10 @@ const CONSTANT = [
     console.log( ''+f );
     /* js console output:
     ((o) => (  o  ||  ( o = {})
-       , (__CT_TMP__ =  o[1]  ||  ( o[1] = {}))
-       , (__CT_TMP__ = __CT_TMP__.b  ||  (__CT_TMP__.b = {}))
-       , (__CT_TMP__ = __CT_TMP__["?"]  ||  (__CT_TMP__["?"] = {}))
-       , (__CT_TMP__.d   ||  (__CT_TMP__.d  = {})) ))
+       , ct._tmp =  o[1]  ||  ( o[1] = {}))
+       , ct._tmp = __CT_TMP__.b  ||  ct._tmp.b = {}))
+       , ct._tmp = __CT_TMP__["?"]  ||  ct._tmp["?"] = {}))
+       , ct._tmp.d   ||  ct._tmp.d  = {})) ))
     */
 
     var a = []

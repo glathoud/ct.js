@@ -58,8 +58,6 @@ ct._eval   = function ( code ) {
 
 ct._tab    = '        ';
 
-ct.TMP     = '__CT_TMP__';
-
 // ct.* tools
 
 ct.afor = function ( /*i,arr*/g2 )
@@ -210,12 +208,12 @@ Example:
             return _first = s;
 
         if (i === nm1)
-            return '('+ct.TMP+''+s+')';
+            return '(ct._tmp'+s+')';
 
         if (i === 1)
-            return '('+ct.TMP+' = '+_first+s+')';
+            return '(ct._tmp = '+_first+s+')';
         
-        return '('+ct.TMP+' = '+ct.TMP+''+s+')';
+        return '(ct._tmp = ct._tmp'+s+')';
     }
 };
 
@@ -246,12 +244,12 @@ Example:
             return _ct_req( _first = s );
 
         if (i === nm1)
-            return '('+_ct_req( ct.TMP+s )+')';
+            return '('+_ct_req( 'ct._tmp'+s )+')';
 
         if (i === 1)
-            return '('+ct.TMP+' = '+_ct_req( _first+s )+')';
+            return '(ct._tmp = '+_ct_req( _first+s )+')';
         
-        return '('+ct.TMP+' = '+_ct_req( ct.TMP+''+s )+')';
+        return '(ct._tmp = '+_ct_req( 'ct._tmp'+s )+')';
     }
 
     function _ct_req( s )
