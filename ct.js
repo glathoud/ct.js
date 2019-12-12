@@ -62,6 +62,15 @@ ct.TMP     = '__CT_TMP__';
 
 // ct.* tools
 
+ct.at    = function ( /*name[...]*/g2 )
+// See also: ct.last
+{
+    var mo = g2.match( /^\s*(\w+)\s*([\s\S]+)$/ )
+    , name = mo[ 1 ]
+    ;
+    return name + mo[ 2 ].replace( /\$/g, '('+name+'.length)' );
+}
+
 ct.def   = function ( /*function | name, function*/g2 )
 {
     var x, name;
@@ -104,6 +113,11 @@ ct.emap = function ( /*(...)(...)*/g2 )
     , arr = ct._eval( rest+')' )
     ;
     return '['+arr.map( function ( v ) { return f.apply( cache, v ); } ).join( '\n'+ct._tab+', ' )+']';
+}
+
+ct.last = function ( g2 )
+{
+    return ct.at( g2+'[$-1]' );
 }
 
 ct.mix = function ( g2 )

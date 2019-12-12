@@ -67,6 +67,16 @@ const _wr = (name) => `console.log("${name}",${name})`;
 
 (function () {
 
+    // see also: ct.last
+    
+    const h = ct( arr => ct.at( arr[$-1] ).ct + 3.45 );
+
+    h( [ 10.0, 20.0, 30.0, 40.0 ] ) === 43.45  ||  null.bug;
+
+})();
+
+(function () {
+
     const h = ct( ( a, b, c ) =>
     {
         // Local CT definition.  These 3 lines are removed
@@ -207,6 +217,17 @@ const CONSTANT = [
 
     h( 1.0, 2.0, 3.0 ).join(',') === [-27, 16, -13.5, 2.5, -16, 5].join(',')  ||  null.bug;
 })();
+
+(function () {
+
+    // see also: ct.at
+    
+    const h = ct( arr => ct.last( arr ).ct + 3.45 );
+
+    h( [ 10.0, 20.0, 30.0, 40.0 ] ) === 43.45  ||  null.bug;
+
+})();
+
 
 (function () {
 
