@@ -316,7 +316,9 @@ const CONSTANT = [
         return ret;
     } );
 
-    f( [ 1, 20, 300, 4000 ] ).join(',') === [3,4000,2,300,1,20,0,1].join(',')  ||  null.bug;
+    f( [ 1, 20, 300, 4000 ] ).join(',')
+        === [3,4000,2,300,1,20,0,1].join(',')
+        ||  null.bug;
     
 })();
 
@@ -360,8 +362,6 @@ const CONSTANT = [
            , some_long_one : o. some_long_one};
        })
     */
-    console.log( JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) ) );
-    // js console.output: {"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}
 
     JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) )
         === `{"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}`
@@ -380,7 +380,9 @@ const CONSTANT = [
             ret.push( [ k, o[ k ] ] );
         }
 
-        ret.sort( (a,b) => a[0] < b[0]  ?  -1  :  a[0] > b[0]  ?  +1  :  0 );
+        ret.sort( (a,b) => a[0] < b[0]  ?  -1
+                  :  a[0] > b[0]  ?  +1
+                  :  0 );
 
         return ret;
     });
