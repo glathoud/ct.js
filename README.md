@@ -240,6 +240,52 @@ const CONSTANT = [
         ||  null.bug;
 })();
 
+
+(function () {
+
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)({
+            p : [ 'a', 'b', 'c' ]
+            , q : [ 'a', 'c', 'b' ]
+            , r : [ 'b', 'a', 'c' ]
+            , s : [ 'b', 'c', 'a' ]
+            , t : [ 'c', 'a', 'b' ]
+            , u : [ 'c', 'b', 'a' ]
+        }).ct;
+    } );
+
+    console.log( ''+h );
+    /* js console output:
+
+       (( a, b, c ) =>
+       {
+           // Local CT definition.  The next line is removed
+           // by the `ct()` call.
+           
+       
+           return {p : (a+b)/(b-c)*c*c
+           , q : (a+c)/(c-b)*b*b
+           , r : (b+a)/(a-c)*c*c
+           , s : (b+c)/(c-a)*a*a
+           , t : (c+a)/(a-b)*b*b
+           , u : (c+b)/(b-a)*a*a};
+       })
+    */
+
+    console.log( h( 1.0, 2.0, 3.0 ) );
+    // js console output: {p:-27, q:16, r:-13.5, s:2.5, t:-16, u:5}
+
+    JSON.stringify(h( 1.0, 2.0, 3.0 ))
+        === JSON.stringify({p:-27, q:16, r:-13.5, s:2.5, t:-16, u:5})
+        ||  null.bug;
+    
+})();
+
 (function () {
 
     const f = ct( arr => {
@@ -328,7 +374,9 @@ const CONSTANT = [
         return ret;
     } );
 
-    f( [ 1, 20, 300, 4000 ] ).join(',') === [3,4000,2,300,1,20,0,1].join(',')  ||  null.bug;
+    f( [ 1, 20, 300, 4000 ] ).join(',')
+        === [3,4000,2,300,1,20,0,1].join(',')
+        ||  null.bug;
     
 })();
 
@@ -372,12 +420,36 @@ const CONSTANT = [
            , some_long_one : o. some_long_one};
        })
     */
-    console.log( JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) ) );
-    // js console.output: {"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}
 
     JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) )
-        === `{"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837,"q":20.737654234692222,"some_long_one":12345}`
+        === `{"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837`
+        +`,"q":20.737654234692222,"some_long_one":12345}`
         ||  null.bug;
+})();
+
+
+ct(function () {
+
+    // Object destructuring as expression.
+    
+    var a;
+    var q,c,r;
+    //...
+    a = {b:1,c:2,d:{e:'fgh'}}
+    ,(ct.ode( {b:q,c,d:r} = a).ct)
+    ,JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
+    
+})();
+
+
+ct(function () {
+
+    // Object destructuring as `var` declaration statement.
+    
+    var a = {b:1,c:2,d:{e:'fgh'}};
+    ct.odev( {b:q,c,d:r} = a ).ct; 
+    JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
+
 })();
 
 
@@ -392,7 +464,9 @@ const CONSTANT = [
             ret.push( [ k, o[ k ] ] );
         }
 
-        ret.sort( (a,b) => a[0] < b[0]  ?  -1  :  a[0] > b[0]  ?  +1  :  0 );
+        ret.sort( (a,b) => a[0] < b[0]  ?  -1
+                  :  a[0] > b[0]  ?  +1
+                  :  0 );
 
         return ret;
     });
