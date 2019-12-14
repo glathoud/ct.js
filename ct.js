@@ -243,7 +243,7 @@ ct.odev = function ( g2 )
     return ct.ode( 'var ' + g2 );
 }
 
-ct.ode  = function ( /*var {...} = o | ({...} = o)*/g2 )
+ct.ode  = function ( /*var {...} = o | {...} = o*/g2 )
 /*
   Object destructuring
 
@@ -257,7 +257,7 @@ ct.ode  = function ( /*var {...} = o | ({...} = o)*/g2 )
   var q,c,r;
   //...
   a = {b:1,c:2,d:{e:'fgh'}}
-  ,(ct.ode( {b:q,c,d:r} = a).ct)  // Parentheses obligatory here, as in the newer ECMAscript versions
+  ,(ct.ode( {b:q,c,d:r} = a).ct)
   ,JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
 */
 {
