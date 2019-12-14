@@ -7,6 +7,7 @@
 This is a minimalistic experiment with CTFE to generate performant code
 while maintaining expressiveness.  
  * Minimalistic implementation: [ct.js](ct.js)
+ * Older browsers like IE11 are supported
  * Examples: [expl.js](expl.js) - somewhat actual version copied below
 
 ```js
