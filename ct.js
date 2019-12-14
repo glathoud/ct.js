@@ -269,7 +269,7 @@ ct.obj = function ( g2 )
             null.invalid;
         }
 
-        return a0.replace( /^\s*|\s*$/g, '' ) + ' : ' + a1.replace( /^\s*|\s*$/g, '' );
+        return a0.trim() + ' : ' + a1.trim();
     }
 }
 
@@ -300,7 +300,7 @@ ct.ode  = function ( /*var {...} = o | {...} = o*/g2 )
     ,   mo_par = !mo_var  &&  g2.match( /^\s*\{\s*([\s\S]+?)\s*\}\s*=\s*([\s\S]+)\s*$/ )
     ,   mo     = mo_var  ||  mo_par
     ,   left   = mo[ 1 ].split( ',').map( function ( s ) { return (-1 < s.indexOf( ':' )  ?  s.split( ':' )  :  [s, s])
-                                                           .map( function ( s2 ) { return s2.replace( /^\s*|\s*$/g, '' ); } )
+                                                           .map( function ( s2 ) { return s2.trim(); } )
                                                          } )
     ,   right  = mo[ 2 ]
     ;
@@ -430,6 +430,22 @@ Example:
         return s+'  ||  ('+s+' = {})';
     }
 };
+
+ct.tli = function ( g2 )
+/* Template literal
+
+   var x = 1, o = { y : { z : 2 } };
+
+   var s = ct.tli( 'x has the value ${x} and z*3.45 has the value ${o.y.z*3.45}' ).ct;
+
+   s === 'x has the value 1 and z*3.45 has the value 6.9'
+     ||  null.bug;
+*/
+{
+    var delim = g2.trim().charAt( 0 );
+    delim === "'"  ||  delim === '"'  ||  null.invalid_delim;
+    return g2.replace( /\$\{([\s\S]+?)\}/g, delim+'+$1+'+delim );
+}
 
 ct.wr = function ( g2 )
 /* `ct.wr(g2).ct` is a shortcut for `ct.mix(_wr("<g2>")).ct`
