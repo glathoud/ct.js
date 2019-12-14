@@ -370,6 +370,27 @@ const CONSTANT = [
 })();
 
 
+ct(function () {
+
+    var a;
+    var q,c,r;
+    //...
+    a = {b:1,c:2,d:{e:'fgh'}}
+    ,(ct.ode( {b:q,c,d:r} = a).ct)  // Parentheses obligatory here, as in the newer ECMAscript versions
+    ,JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
+    
+})();
+
+
+ct(function () {
+
+    var a = {b:1,c:2,d:{e:'fgh'}};
+    ct.odev( {b:q,c,d:r} = a ).ct; 
+    JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
+
+})();
+
+
 (function () {
 
     var f = ct( (o) => {

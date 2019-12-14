@@ -238,6 +238,52 @@ ct.obj = function ( g2 )
     }
 }
 
+ct.odev = function ( g2 )
+{
+    return ct.ode( 'var ' + g2 );
+}
+
+ct.ode  = function ( /*var {...} = o | ({...} = o)*/g2 )
+/*
+  Object destructuring
+
+  var a = {b:1,c:2,d:{e:'fgh'}};
+  ct.odev( {b:q,c,d:r} = a ).ct; 
+  JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
+
+  or
+
+  var a;
+  var q,c,r;
+  //...
+  a = {b:1,c:2,d:{e:'fgh'}}
+  ,(ct.ode( {b:q,c,d:r} = a).ct)  // Parentheses obligatory here, as in the newer ECMAscript versions
+  ,JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
+*/
+{
+    var mo_var = g2.match( /^\s*var\s*\{\s*([\s\S]+?)\s*\}\s*=\s*([\s\S]+)\s*$/ )
+    ,   mo_par = !mo_var  &&  g2.match( /^\s*\{\s*([\s\S]+?)\s*\}\s*=\s*([\s\S]+)\s*$/ )
+    ,   mo     = mo_var  ||  mo_par
+    ,   left   = mo[ 1 ].split( ',').map( function ( s ) { return (-1 < s.indexOf( ':' )  ?  s.split( ':' )  :  [s, s])
+                                                           .map( function ( s2 ) { return s2.replace( /^\s*|\s*$/g, '' ); } )
+                                                         } )
+    ,   right  = mo[ 2 ]
+    ;
+    return (
+        mo_var  ?  [ 'var ' + (left.map( function ( x ) { return x[ 1 ]; } ).join( ', ' )) + ';' ]  :  []
+    ).concat(
+        [ '(' ]
+    ).concat(
+        [
+            left.map( function ( x ) { return '(' + x[ 1 ] + ' = ' + right + '.' + x[ 0 ] + ')'; } )
+                .join( ct._tab + ', \n' )
+        ]
+    ).concat(
+        [ ')' ]
+    ).join( ct._tab + '\n' );
+}
+
+
 ct.ofor = function ( /*k,obj*/g2 )
 /*
     var f = ct( (o) => {
