@@ -418,6 +418,8 @@ const CONSTANT = [
 
 ct(function () {
 
+    // Object destructuring as expression.
+    
     var a;
     var q,c,r;
     //...
@@ -430,6 +432,8 @@ ct(function () {
 
 ct(function () {
 
+    // Object destructuring as `var` declaration statement.
+    
     var a = {b:1,c:2,d:{e:'fgh'}};
     ct.odev( {b:q,c,d:r} = a ).ct; 
     JSON.stringify([q,c,r])===JSON.stringify([1,2,{e:'fgh'}])  ||  null.bug;
