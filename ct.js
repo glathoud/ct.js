@@ -165,12 +165,31 @@ ct.emap = function ( /*(...)(...)*/g2 )
     } );
 
 
+    Similary we can also build objects using `ct.emap`:
+
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)({
+            p : [ 'a', 'b', 'c' ]
+            , q : [ 'a', 'c', 'b' ]
+            , r : [ 'b', 'a', 'c' ]
+            , s : [ 'b', 'c', 'a' ]
+            , t : [ 'c', 'a', 'b' ]
+            , u : [ 'c', 'b', 'a' ]
+        }).ct;
+    } );
+
+
     See also: ct.def
 */
 {
     var cache = this;
     
-    var mo = g2.match( /^\s*(\w+)\s*\)([\s\S]*)$/ )
+    var mo = g2.match( /^\s*(\w+)\s*\)\s*\(([\s\S]*)$/ )
     , name = mo[ 1 ]
     , rest = mo[ 2 ]
     ;
@@ -178,9 +197,25 @@ ct.emap = function ( /*(...)(...)*/g2 )
     rest  ||  null.missing_rest;
 
     var f = cache[ name ]  ||  ct[ name ]
-    , arr = ct._eval( rest+')' )
+    ,   r = ct._eval( '('+rest+')' )
     ;
-    return '['+arr.map( function ( v ) { return f.apply( cache, v ); } ).join( '\n'+ct._tab+', ' )+']';
+
+    // Array
+
+    if (r instanceof Array)
+        return '['+r.map( rest_one ).join( '\n'+ct._tab+', ' )+']';
+
+    // Object
+    
+    var ret = []
+    ,   _emptyObj = {}
+    ;
+    for (var k in r) if (!(k in _emptyObj))
+        ret.push( k + ' : ' + rest_one( r[ k ] ) );
+
+    return '{'+ret.join( '\n'+ct._tab+', ' )+'}';
+
+    function rest_one( v ) { return f.apply( cache, v ); }
 }
 
 ct.last = function ( g2 )

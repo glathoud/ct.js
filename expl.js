@@ -228,6 +228,52 @@ const CONSTANT = [
         ||  null.bug;
 })();
 
+
+(function () {
+
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)({
+            p : [ 'a', 'b', 'c' ]
+            , q : [ 'a', 'c', 'b' ]
+            , r : [ 'b', 'a', 'c' ]
+            , s : [ 'b', 'c', 'a' ]
+            , t : [ 'c', 'a', 'b' ]
+            , u : [ 'c', 'b', 'a' ]
+        }).ct;
+    } );
+
+    console.log( ''+h );
+    /* js console output:
+
+       (( a, b, c ) =>
+       {
+           // Local CT definition.  The next line is removed
+           // by the `ct()` call.
+           
+       
+           return {p : (a+b)/(b-c)*c*c
+           , q : (a+c)/(c-b)*b*b
+           , r : (b+a)/(a-c)*c*c
+           , s : (b+c)/(c-a)*a*a
+           , t : (c+a)/(a-b)*b*b
+           , u : (c+b)/(b-a)*a*a};
+       })
+    */
+
+    console.log( h( 1.0, 2.0, 3.0 ) );
+    // js console output: {p:-27, q:16, r:-13.5, s:2.5, t:-16, u:5}
+
+    JSON.stringify(h( 1.0, 2.0, 3.0 ))
+        === JSON.stringify({p:-27, q:16, r:-13.5, s:2.5, t:-16, u:5})
+        ||  null.bug;
+    
+})();
+
 (function () {
 
     const f = ct( arr => {
