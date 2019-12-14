@@ -582,4 +582,15 @@ ct(function () {
     d === a[1].b["?"].d  ||  null.bug;
     
 })();
+
+ct(function () {
+
+    var x = 1, o = { y : { z : 2 } };
+
+    var s = ct.tli( 'x has the value ${x} and z*3.45 has the value ${o.y.z*3.45}' ).ct;
+
+    s === 'x has the value 1 and z*3.45 has the value 6.9'
+        ||  null.bug;
+
+})();
 ```
