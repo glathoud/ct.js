@@ -184,6 +184,42 @@ ct.emap = function ( /*(...)(...)*/g2 )
     } );
 
 
+    In both cases a comma-separated string 'a,b,c'
+    can be used as a shortcut for [ 'a', 'b', 'c' ]:
+
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)([
+            'a,b,c'
+            , 'a,c,b'
+            , 'b,a,c'
+            , 'b,c,a'
+            , 'c,a,b'
+            , 'c,b,a'
+        ]).ct;
+    } );
+    
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)({
+            p : 'a,b,c'
+            , q : 'a,c,b'
+            , r : 'b,a,c'
+            , s : 'b,c,a'
+            , t : 'c,a,b'
+            , u : 'c,b,a'
+        }).ct;
+    } );
+    
+
     See also: ct.def
 */
 {
@@ -215,7 +251,10 @@ ct.emap = function ( /*(...)(...)*/g2 )
 
     return '{'+ret.join( '\n'+ct._tab+', ' )+'}';
 
-    function rest_one( v ) { return f.apply( cache, v ); }
+    function rest_one( v ) { return f.apply( cache
+                                             , 'string' === typeof v  ?  v.split( ',' ).map( function (s) { return s.trim(); } )
+                                             : v
+                                           ); }
 }
 
 ct.last = function ( g2 )
