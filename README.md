@@ -5,9 +5,15 @@
 [[live page](https://glat.info/ct.js/)]
 
 This is a minimalistic experiment with CTFE to generate performant code
-while maintaining expressiveness.  
+while maintaining expressiveness. 
+
+Main goals:
+ * **Lightweight** dynamic transpilation of a few selected ECMAScript features for older browsers like IE11
+ * Easy dynamic generation of performant math code, where needed.
+ * potentially easy to integrate into a build system as well.
+
+Contents:
  * Minimalistic implementation: [ct.js](ct.js)
- * Older browsers like IE11 are supported
  * Examples: [expl.js](expl.js) - somewhat actual version copied below
 
 ```js
