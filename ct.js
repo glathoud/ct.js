@@ -483,7 +483,7 @@ ct.tli = function ( g2 )
 {
     var delim = g2.trim().charAt( 0 );
     delim === "'"  ||  delim === '"'  ||  null.invalid_delim;
-    return g2.replace( /\$\{([\s\S]+?)\}/g, delim+'+$1+'+delim );
+    return g2.replace( /\$\{([\s\S]+?)\}/g, delim+'+($1)+'+delim );
 }
 
 ct.wr = function ( g2 )
