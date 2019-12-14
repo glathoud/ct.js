@@ -10,7 +10,7 @@ while maintaining expressiveness.
 Main goals:
  * **Lightweight** dynamic transpilation of a few selected ECMAScript features for older browsers like IE11
  * Easy dynamic generation of performant math code, where needed.
- * potentially easy to integrate into a build system as well.
+ * Static transformation, i.e. `ct.js` may easily be integrated into a build system.
 
 Contents:
  * Minimalistic implementation: [ct.js](ct.js)
