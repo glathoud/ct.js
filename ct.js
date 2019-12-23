@@ -33,6 +33,7 @@ function ct( /*function | string*/f_or_code )
 
     var eval_compatible_code = '('+ret+')';
 
+    ret._ctCode  = new_code;
     ret.toString = function () { return eval_compatible_code; };
     
     return ret;
