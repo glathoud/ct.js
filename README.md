@@ -247,7 +247,6 @@ const CONSTANT = [
         ||  null.bug;
 })();
 
-
 (function () {
 
     const h = ct( ( a, b, c ) =>
@@ -292,6 +291,158 @@ const CONSTANT = [
         ||  null.bug;
     
 })();
+
+
+
+
+
+(function () {
+
+    // Variant with ct.emap, a short definition of `expr`, and
+    // shortcut comma-separated strings like 'a,b,c'.
+    
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)([
+            'a,b,c'
+            , 'a,c,b'
+            , 'b,a,c'
+            , 'b,c,a'
+            , 'c,a,b'
+            , 'c,b,a'
+        ]).ct;
+    } );
+
+    console.log( ''+h );
+
+    /* js console output:
+    
+       (( a, b, c ) =>
+       {
+           // Local CT definition.  The next line is removed
+           // by the `ct()` call.
+           
+      
+           return [(a+b)/(b-c)*c*c
+           , (a+c)/(c-b)*b*b
+           , (b+a)/(a-c)*c*c
+           , (b+c)/(c-a)*a*a
+           , (c+a)/(a-b)*b*b
+           , (c+b)/(b-a)*a*a];
+       })
+    */
+    
+    console.log( h( 1.0, 2.0, 3.0 ) );
+    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
+
+    h( 1.0, 2.0, 3.0 ).join(',')
+        === [-27, 16, -13.5, 2.5, -16, 5].join(',')
+        ||  null.bug;
+})();
+
+
+
+const CONSTANT2 = [
+    'a,b,c'
+    , 'a,c,b'
+    , 'b,a,c'
+    , 'b,c,a'
+    , 'c,a,b'
+    , 'c,b,a'
+];
+
+(function () {
+
+    // Variant with ct.emap, a short definition of `expr`, a global
+    // constant, and shortcut comma-separated strings like 'a,b,c'.
+    
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+        
+        return ct.emap(expr)( CONSTANT ).ct;
+    } );
+
+    console.log( ''+h );
+
+    /* js console output:
+    
+       (( a, b, c ) =>
+       {
+           // Local CT definition.  The next line is removed
+           // by the `ct()` call.
+           
+      
+           return [(a+b)/(b-c)*c*c
+           , (a+c)/(c-b)*b*b
+           , (b+a)/(a-c)*c*c
+           , (b+c)/(c-a)*a*a
+           , (c+a)/(a-b)*b*b
+           , (c+b)/(b-a)*a*a];
+       })
+    */
+    
+    console.log( h( 1.0, 2.0, 3.0 ) );
+    // js console output: [-27, 16, -13.5, 2.5, -16, 5]
+
+    h( 1.0, 2.0, 3.0 ).join(',')
+        === [-27, 16, -13.5, 2.5, -16, 5].join(',')
+        ||  null.bug;
+})();
+
+
+(function () {
+
+    const h = ct( ( a, b, c ) =>
+    {
+        // Local CT definition.  The next line is removed
+        // by the `ct()` call.
+        ct.def( expr, ( x, y, z ) => `(${x}+${y})/(${y}-${z})*${z}*${z}` ).ct
+
+        return ct.emap(expr)({
+            p : 'a,b,c'
+            , q : 'a,c,b'
+            , r : 'b,a,c'
+            , s : 'b,c,a'
+            , t : 'c,a,b'
+            , u : 'c,b,a'
+        }).ct;
+    } );
+
+    console.log( ''+h );
+    /* js console output:
+
+       (( a, b, c ) =>
+       {
+           // Local CT definition.  The next line is removed
+           // by the `ct()` call.
+           
+       
+           return {p : (a+b)/(b-c)*c*c
+           , q : (a+c)/(c-b)*b*b
+           , r : (b+a)/(a-c)*c*c
+           , s : (b+c)/(c-a)*a*a
+           , t : (c+a)/(a-b)*b*b
+           , u : (c+b)/(b-a)*a*a};
+       })
+    */
+
+    console.log( h( 1.0, 2.0, 3.0 ) );
+    // js console output: {p:-27, q:16, r:-13.5, s:2.5, t:-16, u:5}
+
+    JSON.stringify(h( 1.0, 2.0, 3.0 ))
+        === JSON.stringify({p:-27, q:16, r:-13.5, s:2.5, t:-16, u:5})
+        ||  null.bug;
+    
+})();
+
+
 
 (function () {
 
@@ -492,7 +643,7 @@ ct(function () {
 
 (function () {
 
-    // ?. operator (optional chaining)
+    // ?. optional chaining operator
 
     const f = ct( (o) => ct.opt( o.a.b.c ).ct  ||  null );
 
@@ -518,7 +669,61 @@ ct(function () {
 
 (function () {
 
-    // ?. operator (optional chaining)
+    // ?. optional chaining operator (explicit variant that should
+    // make removing ct.js easier in the future).
+
+    const f = ct( (o) => ct.opt( "o?.a?.b?.c" ).ct  ||  null );
+
+    console.log( ''+f );
+    /* js console output:
+       ((o) =>  o
+               && ct._tmp =  o.a)
+               && ct._tmp = ct._tmp.b)
+               && ct._tmp.c )  ||  null)
+    */   
+
+    console.log( f( {} ) ); // js console output: null
+
+    console.log( f( {a:{b:{}}} ) ) // js console output: null
+
+    console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
+
+    f({}) === null  ||  null.bug;
+    f({a:{b:{}}}) === null  ||  null.bug;
+    f( {a:{b:{c:123456}}} ) === 123456  ||  null.bug;
+    
+})();
+
+(function () {
+
+    // ?. optional chaining operator (explicit variant that should
+    // make removing ct.js easier in the future).
+
+    const f = ct( (o) => ct.opt( 'o?.a?.b?.c' ).ct  ||  null );
+
+    console.log( ''+f );
+    /* js console output:
+       ((o) =>  o
+               && ct._tmp =  o.a)
+               && ct._tmp = ct._tmp.b)
+               && ct._tmp.c )  ||  null)
+    */   
+
+    console.log( f( {} ) ); // js console output: null
+
+    console.log( f( {a:{b:{}}} ) ) // js console output: null
+
+    console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
+
+    f({}) === null  ||  null.bug;
+    f({a:{b:{}}}) === null  ||  null.bug;
+    f( {a:{b:{c:123456}}} ) === 123456  ||  null.bug;
+    
+})();
+
+(function () {
+
+    // ?. optional chaining operator (extended)
 
     const f = ct( (o) => ct.opt( o[1].b["?"].d ).ct  ||  null );
 

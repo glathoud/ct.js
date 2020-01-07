@@ -396,7 +396,7 @@ ct.ofor = function ( /*k,obj*/g2 )
 
 
 ct.opt = function ( g2 )
-/* Fetch an optional value. This is equivalent to the `.?` operator.
+/* Fetch an optional value. This somewhat equivalent to the `?.` operator.
 
 Example:
 
@@ -407,8 +407,25 @@ Example:
     console.log( f( [0,{b:{}}] ) ) // js console output: null
 
     console.log( f( [0,{b:{"?":{d:789}}}] ) ) // js console output: 789
+
+
+Variant with the explicit `?.` operator:
+
+    var f = ct( function ( o ) { return ct.opt( "o?.a?.b?.c" ).ct; } );
+
+is equivalent to:
+
+    var f = ct( function ( o ) { return ct.opt( o.a.b.c ).ct; } );
+
+(the variant can be useful to remove ct.js later on.)
 */
 {
+    // Variant with the explicit `?.` operator
+    var mo_v = g2.match( /^\s*(['"])([\s\S]+)\1\s*$/ );
+    if (mo_v)
+        return ct.opt( mo_v[ 2 ].replace( /\?\./g, '.' ) );
+
+    
     var mo = g2.match( /\s*(?:^|[\.\[])[^\.\[]+\s*/g )
     ,  nm1 = mo.length - 1
     ;

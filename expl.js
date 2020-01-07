@@ -624,7 +624,7 @@ ct(function () {
 
 (function () {
 
-    // .? operator
+    // ?. optional chaining operator
 
     const f = ct( (o) => ct.opt( o.a.b.c ).ct  ||  null );
 
@@ -650,7 +650,61 @@ ct(function () {
 
 (function () {
 
-    // .? operator
+    // ?. optional chaining operator (explicit variant that should
+    // make removing ct.js easier in the future).
+
+    const f = ct( (o) => ct.opt( "o?.a?.b?.c" ).ct  ||  null );
+
+    console.log( ''+f );
+    /* js console output:
+       ((o) =>  o
+               && ct._tmp =  o.a)
+               && ct._tmp = ct._tmp.b)
+               && ct._tmp.c )  ||  null)
+    */   
+
+    console.log( f( {} ) ); // js console output: null
+
+    console.log( f( {a:{b:{}}} ) ) // js console output: null
+
+    console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
+
+    f({}) === null  ||  null.bug;
+    f({a:{b:{}}}) === null  ||  null.bug;
+    f( {a:{b:{c:123456}}} ) === 123456  ||  null.bug;
+    
+})();
+
+(function () {
+
+    // ?. optional chaining operator (explicit variant that should
+    // make removing ct.js easier in the future).
+
+    const f = ct( (o) => ct.opt( 'o?.a?.b?.c' ).ct  ||  null );
+
+    console.log( ''+f );
+    /* js console output:
+       ((o) =>  o
+               && ct._tmp =  o.a)
+               && ct._tmp = ct._tmp.b)
+               && ct._tmp.c )  ||  null)
+    */   
+
+    console.log( f( {} ) ); // js console output: null
+
+    console.log( f( {a:{b:{}}} ) ) // js console output: null
+
+    console.log( f( {a:{b:{c:123456}}} ) ) // js console output: 123456
+
+    f({}) === null  ||  null.bug;
+    f({a:{b:{}}}) === null  ||  null.bug;
+    f( {a:{b:{c:123456}}} ) === 123456  ||  null.bug;
+    
+})();
+
+(function () {
+
+    // ?. optional chaining operator (extended)
 
     const f = ct( (o) => ct.opt( o[1].b["?"].d ).ct  ||  null );
 
