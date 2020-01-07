@@ -492,7 +492,7 @@ ct(function () {
 
 (function () {
 
-    // .? operator
+    // ?. operator (optional chaining)
 
     const f = ct( (o) => ct.opt( o.a.b.c ).ct  ||  null );
 
@@ -518,7 +518,7 @@ ct(function () {
 
 (function () {
 
-    // .? operator
+    // ?. operator (optional chaining)
 
     const f = ct( (o) => ct.opt( o[1].b["?"].d ).ct  ||  null );
 
