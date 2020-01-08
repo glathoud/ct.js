@@ -567,6 +567,41 @@ const CONSTANT2 = [
 })();
 
 
+(function () {
+
+    // Concise object definition: variant with quotes around, for compatibility with old JS engines
+
+    var f = ct( (o,a,b,c) => {
+        var d = a*3+b-2
+        ,   e = Math.sin( d*d-36 )
+        ;
+        return ct.obj( "{a,b,c,d,e,q : d-e, some_long_one : o.$}" ).ct;
+    });
+
+    console.log( ''+f );
+    /* js console output:
+
+       ((o,a,b,c) => {
+           var d = a*3+b-2
+           ,   e = Math.sin( d*d-36 )
+           ;
+           return {a : a
+           , b : b
+           , c : c
+           , d : d
+           , e : e
+           , q : d-e
+           , some_long_one : o. some_long_one};
+       })
+    */
+
+    JSON.stringify( f( { some_long_one : 12345 }, 1.0, 20.0, 300.0 ) )
+        === `{"a":1,"b":20,"c":300,"d":21,"e":0.26234576530777837`
+        +`,"q":20.737654234692222,"some_long_one":12345}`
+        ||  null.bug;
+})();
+
+
 ct(function () {
 
     // Object destructuring as expression.

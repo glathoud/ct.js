@@ -285,6 +285,12 @@ ct.obj = function ( g2 )
     });
 */
 {
+    // Variant with quotes around, for compatibility with old JS engines
+    var mo_v = g2.match( /^\s*(['"])([\s\S]+)\1\s*$/ );
+    if (mo_v)
+        return ct.obj( mo_v[ 2 ].replace( /\?\./g, '.' ) );
+
+    
     var core = g2.match( /^\s*\{(.*)\}\s*$/ )[ 1 ];
     
     return '{'+ (core.split( ',' ).map( _ct_obj_one ).join( '\n'+ct._tab+', '))+'}';
