@@ -20,6 +20,7 @@
   For more examples see the file ./expl.js
 */
 
+var i_ct = 1295;
 function ct( /*function | string*/f_or_code )
 {
     var cache = {};
@@ -27,8 +28,13 @@ function ct( /*function | string*/f_or_code )
     var code = ''+f_or_code;
 
     var new_code = code.replace( /ct\.(\w+)\(([\s\S]*?)\).ct/g
-                                 , replace_one );
-
+                                 , replace_one )
+    // Make it easier to set breakpoints, through source URL
+        + '\r\n//' + '\x23 source' + 'URL=https://compiled_by_ct.js/'
+        + (f_or_code.name  ?  '.'+f_or_code.name  :  '')
+        + '__' + ((i_ct = 1+~~i_ct).toString( 36 )) + '__'
+        + '\r\n';
+    
     var ret = ct._eval( new_code );
 
     var eval_compatible_code = '('+ret+')';

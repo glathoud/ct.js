@@ -602,7 +602,7 @@ const CONSTANT2 = [
 })();
 
 
-ct(function () {
+ct(function named_fun() {
 
     // Object destructuring as expression.
     
