@@ -65,6 +65,21 @@ ct._eval   = function ( code ) {
 
 ct._tab    = '        ';
 
+ct._variant_with_quotesF = function ( f )
+{
+    return variant_with_quotes;
+
+    function variant_with_quotes( g2 )
+    {
+        // Variant with quotes around, for compatibility with old JS engines
+        var mo_v = g2.match( /^\s*(['"])([\s\S]+)\1\s*$/ );
+        if (mo_v)
+            return f( mo_v[ 2 ].replace( /\?\./g, '.' ) );
+
+        return f( g2 );
+    }
+}
+
 // -------------------- ct.* tools --------------------
 
 ct.afor = function ( /*i,arr*/g2 )
@@ -88,7 +103,7 @@ ct.arof = function ( /*i,arr*/g2 )
 /*
   var x = [];
   
-  ct.arof( k, myarr )
+  ct.arof( k, myarr ).ct
   {
     x.push( k, myarr[ k ] );
   }
@@ -280,7 +295,7 @@ ct.mix = function ( g2 )
     return ct._eval( g2 );
 }; 
 
-ct.obj = function ( g2 )
+ct.obj = ct._variant_with_quotesF( function ( g2 )
 /* Example:
 
     var f = ct( (o,a,b,c) => {
@@ -291,12 +306,6 @@ ct.obj = function ( g2 )
     });
 */
 {
-    // Variant with quotes around, for compatibility with old JS engines
-    var mo_v = g2.match( /^\s*(['"])([\s\S]+)\1\s*$/ );
-    if (mo_v)
-        return ct.obj( mo_v[ 2 ].replace( /\?\./g, '.' ) );
-
-    
     var core = g2.match( /^\s*\{(.*)\}\s*$/ )[ 1 ];
     
     return '{'+ (core.split( ',' ).map( _ct_obj_one ).join( '\n'+ct._tab+', '))+'}';
@@ -323,14 +332,14 @@ ct.obj = function ( g2 )
 
         return a0.trim() + ' : ' + a1.trim();
     }
-}
+});
 
-ct.odev = function ( g2 )
+ct.odev = ct._variant_with_quotesF( function ( g2 )
 {
     return ct.ode( 'var ' + g2 );
-}
+});
 
-ct.ode  = function ( /*var {...} = o | {...} = o*/g2 )
+ct.ode  = ct._variant_with_quotesF( function ( /*var {...} = o | {...} = o*/g2 )
 /*
   Object destructuring
 
@@ -368,7 +377,7 @@ ct.ode  = function ( /*var {...} = o | {...} = o*/g2 )
     ).concat(
         [ ')' ]
     ).join( ct._tab + '\n' );
-}
+});
 
 
 ct.ofor = function ( /*k,obj*/g2 )
